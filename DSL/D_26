@@ -1,0 +1,90 @@
+#include <iostream>
+#define size 20
+using namespace std;
+class stack
+{
+    int top = -1;
+    char s[size];
+    public:
+    int isfull()
+    {
+        return (top >= size) ? 1 : 0;
+    }
+    int isempty()
+    {
+        return (top == -1) ? 1 : 0;
+    }
+    void push(char x)
+    {
+        if (isfull() == 1)
+        {
+            cout << "Stack is overflow "<<endl;
+        }
+        else
+        {
+            top++;
+            cout<<x<<" Entered "<<endl;
+            s[top] = x;
+        }
+    }
+    void pop()
+    {
+        if (isempty() == 1)
+        {
+            cout << "Stack is underflow "<<endl;
+        }
+        else
+        {
+            cout << s[top] << " Deleted " << endl;
+            top--;
+        }
+    }
+};
+int main()
+{
+    stack s;
+    string exp;
+    char ch,ch1;
+    int i=0;
+    do
+    {
+        cout << "Enter expression ";
+        cin >> exp;
+        if(exp[0]==')'||exp[0]==']'||exp[0]=='}'){
+            cout<<"Invalid expression "<<endl;
+            exit(0);
+        }
+        while(exp[i]!='\0'){
+            ch=exp[i];
+            switch(ch){
+                case '(':
+                    s.push(ch);
+                    break;
+                case '{':
+                    s.push(ch);
+                    break;
+                case '[':
+                    s.push(ch);
+                    break;
+                case ')':
+                    s.pop();
+                    break;
+                case '}':
+                    s.pop();
+                    break;
+                case ']':
+                    s.pop();
+                    break;
+            }
+            i++;
+        }
+        if(s.isempty()==1){
+            cout<<"Expression is well parenthiced "<<endl;
+        }
+        else{
+            cout<<"Invalid expression "<<endl;
+        }
+        cout<<"Do you want to continue(y/n) : ";
+        cin>>ch1;
+    }while(ch1=='y');
+}

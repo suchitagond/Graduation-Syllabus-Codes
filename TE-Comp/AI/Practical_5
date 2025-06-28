@@ -1,0 +1,49 @@
+def simple_chatbot(question):
+    # Dictionary mapping questions to answers
+    qa_pairs = {
+        "hello": "Hi there! How can I help you today?",
+        "How can I apply for admissions?": "You can apply for admissions by visiting our college website and filling out the online application form.",
+        "What are the admission requirements?": "The admission requirements vary depending on the program you are interested in. You can find detailed information on our website or contact the admissions office for assistance.",
+        "What undergraduate programs do you offer?":"gtfyuui",
+        "bye": "Goodbye! Have a great day!"
+    }
+
+    # Clean and search for the question in the dictionary
+    question = question.lower().strip()
+    return qa_pairs.get(question, "Sorry, I don't understand that question.")
+
+if __name__ == "__main__":
+    print("Welcome to the simple chatbot. Type 'bye' to exit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "bye":
+            print("Chatbot: Goodbye! Have a great day!")
+            break
+        response = simple_chatbot(user_input)
+        print(f"Chatbot: {response}")
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+import nltk
+from nltk.chat.util import Chat, reflections
+
+# Define patterns and responses
+faq_pairs = [
+    (r'hi|hello', ['Hi there!', 'Hello!', 'Hey!']),
+    (r'how are you', ['I am doing well, thank you!', 'I am fine, thanks!']),
+    (r'bye|goodbye', ['Goodbye!', 'Bye!', 'See you later!']),
+    (r'(what is your|where is your) location', ['Our headquarters is located at 123 Main St, City.']),
+    (r'(.*) (customer support|contact|phone)', ['You can contact our customer support at 1-800-123-4567.'])
+]
+
+# Create a chatbot instance
+chatbot = Chat(faq_pairs, reflections)
+
+# Start interaction
+print("Bot: Hi! How can I help you today?")
+while True:
+    user_input = input("You: ")
+    response = chatbot.respond(user_input)
+    print("Bot:", response)

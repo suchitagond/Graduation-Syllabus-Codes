@@ -1,0 +1,62 @@
+def isprime(x):
+	if(x<=1):
+		return False
+	if(x==2):
+		return True
+	for i in range(2,int(x/2)+1):
+		if(x%i==0):
+			return False
+	return True
+
+def gcd(a,b):
+	temp=0
+	while(1):
+		temp=a%b
+		if(temp==0):
+			return b
+		a=b
+		b=temp
+
+def compute_e():
+	e = 2
+	while (e < phi):
+		if (gcd(e, phi) == 1):
+			return e
+		else:
+			e = e + 1
+
+def compute_d():
+	d = 1
+	while (d <= phi):
+		if (((d * e) % phi) == 1):
+			return d
+		else:
+			d = d + 1
+
+def encryption(M):
+	C=(M**e)%n
+	return C
+
+def decryption(C):
+	M=(C**d)%n
+	return M
+
+p=int(input("Enter prime no P : "))
+while(not isprime(p)):
+	p=int(input("Enter valid prime no P : "))
+
+q=int(input("Enter prime no Q : "))
+while(not isprime(q)):
+	q=int(input("Enter valid prime no Q : "))
+
+M=int(input("Enter Message : "))
+n=p*q
+phi=(p-1)*(q-1)
+e=compute_e()
+d=compute_d()
+cipher=encryption(M)
+print("Encrypted message is : ",cipher)
+M=decryption(cipher)
+print("Decrypted message is : ",M)
+
+

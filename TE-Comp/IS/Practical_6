@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffie-Hellman Key Exchange</title>
+</head>
+
+<body>
+    <h2>Diffie-Hellman Key Exchange</h2>
+    <p>Enter Alice's Private Key (a): <input type="number" id="alice-private-key"></p>
+    <p>Enter Bob's Private Key (b): <input type="number" id="bob-private-key"></p>
+    <button onclick="computeSharedSecret()">Compute Shared Secret Key</button>
+    <p id="alice-public-key"></p>
+    <p id="bob-public-key"></p>
+    <p id="shared-secret-key"></p>
+
+    <script>
+        function computeSharedSecret() {
+            var prime = 23; // Prime number
+            var base = 5; // Primitive root modulo prime
+
+            var alicePrivateKey = parseInt(document.getElementById("alice-private-key").value);
+            var bobPrivateKey = parseInt(document.getElementById("bob-private-key").value);
+
+            var alicePublicKey = Math.pow(base, alicePrivateKey) % prime;
+            var bobPublicKey = Math.pow(base, bobPrivateKey) % prime;
+
+            var sharedSecretKeyByAlice = Math.pow(bobPublicKey, alicePrivateKey) % prime;
+            var sharedSecretKeyByBob = Math.pow(alicePublicKey, bobPrivateKey) % prime;
+
+            if (sharedSecretKeyByAlice === sharedSecretKeyByBob) {
+                document.getElementById("alice-public-key").innerHTML = "Alice's Public Key (A): " + alicePublicKey;
+                document.getElementById("bob-public-key").innerHTML = "Bob's Public Key (B): " + bobPublicKey;
+                document.getElementById("shared-secret-key").innerHTML = "Shared Secret Key: " + sharedSecretKeyByAlice;
+            } else {
+                document.getElementById("alice-public-key").innerHTML = "";
+                document.getElementById("bob-public-key").innerHTML = "";
+                document.getElementById("shared-secret-key").innerHTML = "Error: Shared Secret Key Mismatch!";
+            }
+        }
+    </script>
+</body>
+
+</html>

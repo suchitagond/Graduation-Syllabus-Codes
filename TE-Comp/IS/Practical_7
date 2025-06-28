@@ -1,0 +1,88 @@
+public class MD5 {
+
+    private static final int[] s = { 7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21 };
+    private static final int[] k = new int[64];
+
+    static {
+        for (int i = 0; i < 64; i++) {
+            k[i] = (int) (Math.pow(2, 32) * Math.abs(Math.sin(i + 1)));
+        }
+    }
+
+    public static String md5(String message) {
+        int a0 = 0x67452301;
+        int b0 = 0xEFCDAB89;
+        int c0 = 0x98BADCFE;
+        int d0 = 0x10325476;
+
+        int[] M = preprocessMessage(message);
+
+        int A = a0;
+        int B = b0;
+        int C = c0;
+        int D = d0;
+
+        for (int i = 0; i < 64; i++) {
+            int F, g;
+            if (i < 16) {
+                F = (B & C) | (~B & D);
+                g = i;
+            } else if (i < 32) {
+                F = (D & B) | (~D & C);
+                g = (5 * i + 1) % 16;
+            } else if (i < 48) {
+                F = B ^ C ^ D;
+                g = (3 * i + 5) % 16;
+            } else {
+                F = C ^ (B | ~D);
+                g = (7 * i) % 16;
+            }
+
+            int temp = D;
+            D = C;
+            C = B;
+            B = B + Integer.rotateLeft(A + F + M[g] + k[i], s[i % 16]);
+            A = temp;
+        }
+
+        a0 += A;
+        b0 += B;
+        c0 += C;
+        d0 += D;
+
+        return toHexString(a0) + toHexString(b0) + toHexString(c0) + toHexString(d0);
+    }
+
+    private static int[] preprocessMessage(String message) {
+        byte[] messageBytes = message.getBytes();
+        int originalLength = messageBytes.length;
+        int paddingLength = (originalLength % 64 < 56) ? (56 - originalLength % 64) : (120 - originalLength % 64);
+        int[] paddedMessage = new int[originalLength + paddingLength + 8];
+
+        for (int i = 0; i < originalLength; i++) {
+            paddedMessage[i] = messageBytes[i] & 0xFF;
+        }
+
+        paddedMessage[originalLength] = 0x80;
+        for (int i = 0; i < 8; i++) {
+            paddedMessage[paddedMessage.length - 8 + i] = (originalLength * 8) >>> (i * 8);
+        }
+
+        return paddedMessage;
+    }
+
+    private static String toHexString(int value) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            int b = (value >>> (i * 8)) & 0xFF;
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        String message = "Hello, World!";
+        String hash = md5(message);
+        System.out.println("MD5 hash of '" + message + "' is: " + hash);
+    }
+}

@@ -1,0 +1,155 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{   
+    int divident[20];
+    int dd;
+    cout << "Enter divident size : ";
+    cin >>dd;
+    cout<<"Enter divident..."<<endl;
+    for(int i=0;i<dd;i++){
+        cin>>divident[i];
+    }
+
+    int divisor[20];
+    int ds;
+    cout << "Enter divisor size : ";
+    cin >>ds;
+    cout<<"Enter divisor..."<<endl;
+    for(int i=0;i<ds;i++){
+        cin>>divisor[i];
+    }
+
+    cout<<"Divisor is : ";
+    for(int i=0;i<ds;i++){
+        cout<<divisor[i]<<" ";
+    }
+    cout<<endl;
+
+    cout<<"Divident is : ";
+    for(int i=0;i<dd;i++){
+        cout<<divident[i]<<" ";
+    }
+    cout<<endl;
+
+    int add = ds - 1;
+    cout<<"No. of 0's appended are : "<<add<<endl;
+    for(int i=dd;i<dd+add;i++){
+        divident[i]=0;
+    }
+
+    int temp[20];
+    cout<<"divident after appending 0's are : ";
+    for(int i=0;i<dd+add;i++){
+        temp[i]=divident[i];
+        cout<<temp[i]<<" ";
+    }
+    cout<<endl;
+
+    for(int i=0;i<dd;i++){
+        int j=0;
+        int k=i;
+        if(temp[k]>=divisor[j]){
+            for(j=0,k=i;j<ds;j++,k++){
+                if((temp[k]==1 && divisor[j]==1) ||(temp[k]==0 && divisor[j]==0)){
+                    temp[k]=0;
+                }
+                else{
+                    temp[k]=1;
+                }
+            }
+        }
+    }
+
+    cout<<"CRC bits : ";
+    int crc[20];
+    for(int i=0,j=dd;i<add;i++,j++){
+        crc[i]=temp[j];
+    }
+
+    for(int i=0;i<add;i++){
+        cout<<crc[i]<<" ";
+    }
+    cout<<endl;
+
+    cout<<"Transmitting data : ";
+    int td[20];
+    int j;
+    for(int i=0;i<dd;i++){
+        td[i]=divident[i];
+    }
+    for(int i=dd,j=0;i<dd+add;i++,j++){
+        td[i]=crc[j];
+    }
+    for(int i=0;i<dd+add;i++){
+        cout<<td[i]<<" ";
+    }
+    cout<<endl;
+
+    cout<<"Reciver data : ";
+    for(int i=0;i<dd+add;i++){
+        temp[i]=td[i];
+        cout<<temp[i]<<" ";
+    }
+    cout<<endl;
+
+    for(int i=0;i<dd;i++){
+        int j=0;
+        int k=i;
+        if(temp[k]>=divisor[j]){
+            for(j=0,k=i;j<ds;j++,k++){
+                if((temp[k]==1 && divisor[j]==1) ||(temp[k]==0 && divisor[j]==0)){
+                    temp[k]=0;
+                }
+                else{
+                    temp[k]=1;
+                }
+            }
+        }
+    }
+
+    int rem[20];
+    cout<<"Reminder : ";
+    for(int i=dd,j=0;j<add;j++,i++){
+        rem[j]=temp[i];
+        cout<<rem[j]<<" ";
+    }
+    cout<<endl;
+
+    int flag=0;
+    for(int i=0;i<add;i++){
+        if(rem[i]!=0){
+            flag=1;
+        }
+    }
+
+    if(flag==0){
+        cout<<"Reminder is 0 so massage is transmitted from sender to reciver successfully...."<<endl;
+    }
+    else{
+        cout<<"Error occur while transmition..."<<endl;
+    }
+    return 0;
+}
+
+
+
+
+//Enter divident size : 8
+//Enter divident...10100001
+
+//Enter divisor size : 4
+//Enter divisor...1001
+
+//Divisor is : 1 0 0 1
+//Divident is : 1 0 1 0 0 0 0 1
+//No. of 0's appended are : 3
+//divident after appending 0's are : 1 0 1 0 0 0 0 1 0 0 0
+//CRC bits : 1 1 1
+
+//Transmitting data : 1 0 1 0 0 0 0 1 1 1 1
+//Reciver data : 1 0 1 0 0 0 0 1 1 1 1
+//Reminder : 0 0 0
+
+//Reminder is 0 so massage is transmitted from sender to reciver successfully....

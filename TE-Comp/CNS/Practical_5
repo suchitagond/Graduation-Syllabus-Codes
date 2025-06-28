@@ -1,0 +1,111 @@
+#include <iostream>
+// #include <cstdlib>
+// #include<stdc++.h>
+using namespace std;
+
+int back_N(int TF, int W, int F, int TC)
+{
+    while (F <= TF)
+    {
+        int z = 0;
+        cout << "Current transmitting window..." << endl;
+        for (int i = F; i < F + W && i <= TF; i++)
+        {
+            cout << "Sending frame.." << i << endl;
+            TC++;
+        }
+        for (int i = F; i < F + W && i <= TF; i++)
+        {
+            int a = rand() % 2;
+            if (!a)
+            {
+                cout << "Acknowledgment of frame.." << i << endl;
+                z++;
+                if ((i + W) <= TF)
+                {
+                    cout << "Sending frame.." << i + W << endl;
+                }
+            }
+            else
+            {
+                cout << "Acknowledgment not recived for.." << i << endl;
+                cout << "Retransmitting window..." << endl;
+                break;
+            }
+        }
+        cout << "\n";
+        F = F + z;
+    }
+    return TC;
+}
+
+int sel_rep(int TF, int W, int F, int TC)
+{
+    while (F <= TF)
+    {
+        int z = 0;
+        cout << "Current transmitting frames..." << endl;
+        for (int i = F; i < F + W && i <= TF; i++)
+        {
+            cout << "Sending frame.." << i << endl;
+            TC++;
+        }
+        for (int i = F; i < F + W && i <= TF; i++)
+        {
+            int a = rand() % 2;
+            if (!a)
+            {
+                cout << "Acknowledgment of frame.." << i << endl;
+                z++;
+                if ((i + W) <= TF)
+                {
+                    cout << "Sending frame.." << i + W << endl;
+                }
+            }
+            else
+            {
+                cout << "Acknowledgment not recived for.." << i << endl;
+                cout << "Retransmitting single frame..." << i << endl;
+                break;
+            }
+        }
+        cout << "\n";
+        F = F + z;
+    }
+    return TC;
+}
+
+int main()
+{
+    int tf, w, f = 1, tc = 0, total, ch;
+    char c;
+    cout << "Enter total no. of frames : ";
+    cin >> tf;
+    cout << "Enter size of window : ";
+    cin >> w;
+    do
+    {
+        cout << "\n1)back_N\n2)Selectiv" << endl;
+        cout << "Enter choice : ";
+        cin >> ch;
+        switch (ch)
+        {
+        case 1:
+            total = back_N(tf, w, f, tc);
+            cout << "Total transmitted frames are... " << total << endl;
+            break;
+        case 2:
+            total = sel_rep(tf, w, f, tc);
+            cout << "Total transmitted frames are... " << total << endl;
+            break;
+
+        default:
+            cout << "Invalid choice..." << endl;
+            break;
+        }
+        cout << "Do you want to continue(Y/N) : ";
+        cin >> c;
+    } while (c == 'Y' || c == 'y');
+
+    return 0;
+}

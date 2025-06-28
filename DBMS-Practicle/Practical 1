@@ -1,0 +1,612 @@
+admin1@newname:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Server has startup warnings: 
+2023-10-19T12:57:30.986+0530 I STORAGE  [initandlisten] 
+2023-10-19T12:57:30.986+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2023-10-19T12:57:30.986+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-10-19T12:57:37.609+0530 I CONTROL  [initandlisten] 
+2023-10-19T12:57:37.609+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2023-10-19T12:57:37.609+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2023-10-19T12:57:37.609+0530 I CONTROL  [initandlisten] 
+> show dbs
+Empdb78          0.000GB
+Jayesh           0.000GB
+Prathamesh       0.000GB
+admin            0.000GB
+collection_user  0.000GB
+config           0.000GB
+emp              0.000GB
+empdb            0.000GB
+local            0.000GB
+mystuents        0.000GB
+pratik           0.000GB
+samruddhi        0.000GB
+test             0.000GB
+> use Empdb78
+switched to db Empdb78
+> show collections
+Employee
+> db.Employee.find()
+
+> db.Employee.insertOne({
+... Empid:101,
+... Name:{FName:"Aditya",LName:"Sarwade"},
+... CompanyName:"TCS",
+... Salary:7880000,
+... Designation:"Tester",
+... Age:20,
+... Expertise:["MongoDB","MySQL","Cassandra"],
+... DOB:"13-10-2003",
+... Emailid:"aditya@gmail.com",
+... Contact:"7478567801",
+... Address:[
+... { PAddr:"1941 Mahu",LAddr:"Madhya Pradesh"},
+... { PAddr:"1410 NG",LAddr:"Madhya Pradesh"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530e7783ceb634204046131")
+}
+> db.Employee.insertOne({
+... Empid:102,
+... Name:{FName:"Brian",LName:"DSouza"},
+... CompanyName:"Infosys",
+... Salary:450000,
+... Designation:"Programmer",
+... Age:23,
+... Expertise:["MongoDB","MySQL","Cassandra"],
+... DOB:"31-03-2003",
+... Emailid:"brian@gmail.com",
+... Contact:"7415267801",
+... Address:[
+... { PAddr:"123 ghs",LAddr:"Kerala"},
+... { PAddr:"78 kbr",LAddr:"Kerala"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530e7fb3ceb634204046132")
+}
+> db.Employee.insertOne({
+... Empid:103,
+... Name:{FName:"Shantanu",LName:"Bhosale"},
+... CompanyName:"Tesla",
+... Salary:2333334,
+... Designation:"Tester",
+... Age:14,
+... Expertise:["MongoDB","MySQL","Cassandra"],
+... DOB:"21-02-2003",
+... Emailid:"shantanu@gmail.com",
+... Contact:"7415262001",
+... Address:[
+... { PAddr:"123 GHF",LAddr:"Pune"},
+... { PAddr:"789 GHJ",LAddr:"Pune"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530e8793ceb634204046133")
+}
+> db.Employee.insertOne({
+... Empid:104,
+... Name:{FName:"Mahesh",LName:"Bhabad"},
+... CompanyName:"Indica",
+... Salary:340000,
+... Designation:"Developer",
+... Age:22,
+... Expertise:["MongoDB","MySQL","Cassandra"],
+... DOB:"14-04-2003",
+... Emailid:"mahesh@gmail.com",
+... Contact:"7415112001",
+... Address:[
+... { PAddr:"123 SDF",LAddr:"Akurdi"},
+... { PAddr:"789 FGH",LAddr:"Akurdi"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530e8e93ceb634204046134")
+}
+> db.Employee.insertOne({
+... Empid:105,
+... Name:{FName:"Shraddha",LName:"Lalbegee"},
+... CompanyName:"IBM",
+... Salary:344555,
+... Designation:"Developer",
+... Age:22,
+... Expertise:["MongoDB","MySQL","Cassandra"],
+... DOB:"16-02-2003",
+... Emailid:"shraddha@gmail.com",
+... Contact:"7415114501",
+... Address:[
+... { PAddr:"123 JMN",LAddr:"Dapodi"},
+... { PAddr:"789 FGH",LAddr:"Dapodi"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530e99e3ceb634204046135")
+}
+> db.Employee.insertOne({
+... Empid:106,
+... Name:{FName:"Rida",LName:"Shaikh"},
+... CompanyName:"Bajaj",
+... Salary:78000,
+... Designation:"DBA",
+... Age:27,
+... Expertise:["Java","vb.NET","Cassandra"],
+... DOB:"15-05-2005",
+... Emailid:"rida@gmail.com",
+... Contact:"7005114501",
+... Address:[
+... { PAddr:"123 wer",LAddr:"Thane"},
+... { PAddr:"789 lij",LAddr:"Thane"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530ea443ceb634204046136")
+}
+> db.Employee.insertOne({
+... Empid:107,
+... Name:{FName:"Suraj",LName:"Gawade"},
+... CompanyName:"Infosys",
+... Salary:450000,
+... Designation:"Tester",
+... Age:27,
+... Expertise:["Mongodb","Java","Cassandra"],
+... DOB:"23-08-2003",
+... Emailid:"suraj@gmail.com",
+... Contact:"7003314501",
+... Address:[
+... { PAddr:"34 Main st",LAddr:"Thane"},
+... { PAddr:"34 Main st",LAddr:"Thane"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530ead03ceb634204046137")
+}
+> db.Employee.insertOne({
+... Empid:108,
+... Name:{FName:"Yash",LName:"Shivtare"},
+... CompanyName:"Red hat",
+... Salary:457800,
+... Designation:"Developer",
+... Age:28,
+... Expertise:["Python","MySQL","MongoDB"],
+... DOB:"20-08-2003",
+... Emailid:"yash@gmail.com",
+... Contact:"7079314501",
+... Address:[
+... { PAddr:"560 Main road",LAddr:"Karnataka"},
+... { PAddr:"560 Main road",LAddr:"Karnataka"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530eb8c3ceb634204046138")
+}
+> db.Employee.insertOne({
+... Empid:109,
+... Name:{FName:"Atharva",LName:"Gawade"},
+... CompanyName:"Lenovo",
+... Salary:500000,
+... Designation:"Tester",
+... Age:30,
+... Expertise:["HTML","CSS","Javascript"],
+... DOB:"17-07-2003",
+... Emailid:"atharva@gmail.com",
+... Contact:"707931501",
+... Address:[
+... { PAddr:"560 nagar road",LAddr:"Karnataka"},
+... { PAddr:"560 nagar road",LAddr:"Karnataka"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530ec363ceb634204046139")
+}
+> db.Employee.insertOne({
+... Empid:110,
+... Name:{FName:"Pankaj",LName:"Khanna"},
+... CompanyName:"Infinix",
+... Salary:500000,
+... Designation:"Tester",
+... Age:30,
+... Expertise:["HTML","CSS","Javascript"],
+... DOB:"16-07-2003",
+... Emailid:"pankaj@gmail.com",
+... Contact:"7878964501",
+... Address:[
+... { PAddr:"Chakan road",LAddr:"Delhi"},
+... { PAddr:"Chakan road",LAddr:"Delhi"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530ecad3ceb63420404613a")
+}
+> db.Employee.find({"Designation":"Programmer","Salary":{$gt:30000}});
+{ "_id" : ObjectId("6530e7fb3ceb634204046132"), "Empid" : 102, "Name" : { "FName" : "Brian", "LName" : "DSouza" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Programmer", "Age" : 23, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "31-03-2003", "Emailid" : "brian@gmail.com", "Contact" : "7415267801", "Address" : [ { "PAddr" : "123 ghs", "LAddr" : "Kerala" }, { "PAddr" : "78 kbr", "LAddr" : "Kerala" } ] }
+> db.Employee.update({
+... "Designation":"Tester","CompanyName":"TCS","Age":25},{upsert:true});
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.Employee.insertOne({ Empid:109, Name:{FName:"Atharva",LName:"Shinde"}, CompanyName:"Lenovo", Salary:500000, Designation:"Tester", Age:25, Expertise:["HTML","CSS","Javascript"], DOB:"17-07-2003", Emailid:"atharva@gmail.com", Contact:"707931501", Address:[ { PAddr:"560 nagar road",LAddr:"Karnataka"}, { PAddr:"560 nagar road",LAddr:"Karnataka"}]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6530ed9e3ceb63420404613b")
+}
+> db.Employee.update({ "Designation":"Tester","CompanyName":"TCS","Age":25},{upsert:true});
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.Employee.find({$or:[{"Age":{$lt:30}},{"Salary":{$gt:40000}}]});
+{ "_id" : ObjectId("6530e7783ceb634204046131"), "Empid" : 101, "Name" : { "FName" : "Aditya", "LName" : "Sarwade" }, "CompanyName" : "TCS", "Salary" : 7880000, "Designation" : "Tester", "Age" : 20, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "13-10-2003", "Emailid" : "aditya@gmail.com", "Contact" : "7478567801", "Address" : [ { "PAddr" : "1941 Mahu", "LAddr" : "Madhya Pradesh" }, { "PAddr" : "1410 NG", "LAddr" : "Madhya Pradesh" } ] }
+{ "_id" : ObjectId("6530e7fb3ceb634204046132"), "Empid" : 102, "Name" : { "FName" : "Brian", "LName" : "DSouza" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Programmer", "Age" : 23, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "31-03-2003", "Emailid" : "brian@gmail.com", "Contact" : "7415267801", "Address" : [ { "PAddr" : "123 ghs", "LAddr" : "Kerala" }, { "PAddr" : "78 kbr", "LAddr" : "Kerala" } ] }
+{ "_id" : ObjectId("6530e8793ceb634204046133"), "Empid" : 103, "Name" : { "FName" : "Shantanu", "LName" : "Bhosale" }, "CompanyName" : "Tesla", "Salary" : 2333334, "Designation" : "Tester", "Age" : 14, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "21-02-2003", "Emailid" : "shantanu@gmail.com", "Contact" : "7415262001", "Address" : [ { "PAddr" : "123 GHF", "LAddr" : "Pune" }, { "PAddr" : "789 GHJ", "LAddr" : "Pune" } ] }
+{ "_id" : ObjectId("6530e8e93ceb634204046134"), "Empid" : 104, "Name" : { "FName" : "Mahesh", "LName" : "Bhabad" }, "CompanyName" : "Indica", "Salary" : 340000, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "14-04-2003", "Emailid" : "mahesh@gmail.com", "Contact" : "7415112001", "Address" : [ { "PAddr" : "123 SDF", "LAddr" : "Akurdi" }, { "PAddr" : "789 FGH", "LAddr" : "Akurdi" } ] }
+{ "_id" : ObjectId("6530e99e3ceb634204046135"), "Empid" : 105, "Name" : { "FName" : "Shraddha", "LName" : "Lalbegee" }, "CompanyName" : "IBM", "Salary" : 344555, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "16-02-2003", "Emailid" : "shraddha@gmail.com", "Contact" : "7415114501", "Address" : [ { "PAddr" : "123 JMN", "LAddr" : "Dapodi" }, { "PAddr" : "789 FGH", "LAddr" : "Dapodi" } ] }
+{ "_id" : ObjectId("6530ea443ceb634204046136"), "Empid" : 106, "Name" : { "FName" : "Rida", "LName" : "Shaikh" }, "CompanyName" : "Bajaj", "Salary" : 78000, "Designation" : "DBA", "Age" : 27, "Expertise" : [ "Java", "vb.NET", "Cassandra" ], "DOB" : "15-05-2005", "Emailid" : "rida@gmail.com", "Contact" : "7005114501", "Address" : [ { "PAddr" : "123 wer", "LAddr" : "Thane" }, { "PAddr" : "789 lij", "LAddr" : "Thane" } ] }
+{ "_id" : ObjectId("6530ead03ceb634204046137"), "Empid" : 107, "Name" : { "FName" : "Suraj", "LName" : "Gawade" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Tester", "Age" : 27, "Expertise" : [ "Mongodb", "Java", "Cassandra" ], "DOB" : "23-08-2003", "Emailid" : "suraj@gmail.com", "Contact" : "7003314501", "Address" : [ { "PAddr" : "34 Main st", "LAddr" : "Thane" }, { "PAddr" : "34 Main st", "LAddr" : "Thane" } ] }
+{ "_id" : ObjectId("6530eb8c3ceb634204046138"), "Empid" : 108, "Name" : { "FName" : "Yash", "LName" : "Shivtare" }, "CompanyName" : "Red hat", "Salary" : 457800, "Designation" : "Developer", "Age" : 28, "Expertise" : [ "Python", "MySQL", "MongoDB" ], "DOB" : "20-08-2003", "Emailid" : "yash@gmail.com", "Contact" : "7079314501", "Address" : [ { "PAddr" : "560 Main road", "LAddr" : "Karnataka" }, { "PAddr" : "560 Main road", "LAddr" : "Karnataka" } ] }
+{ "_id" : ObjectId("6530ec363ceb634204046139"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Gawade" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+{ "_id" : ObjectId("6530ecad3ceb63420404613a"), "Empid" : 110, "Name" : { "FName" : "Pankaj", "LName" : "Khanna" }, "CompanyName" : "Infinix", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "16-07-2003", "Emailid" : "pankaj@gmail.com", "Contact" : "7878964501", "Address" : [ { "PAddr" : "Chakan road", "LAddr" : "Delhi" }, { "PAddr" : "Chakan road", "LAddr" : "Delhi" } ] }
+{ "_id" : ObjectId("6530ed9e3ceb63420404613b"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Shinde" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 25, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+> db.Employee.find({"Address.LAddr":"Pune","Address.Pine_code":411001});
+> db.Employee.update(
+... {"CompanyName":"TCS"},
+... {$inc:{"Salary":2000}},{multi:true});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find({"Designation":{$ne:"Developer"}});
+{ "_id" : ObjectId("6530e7783ceb634204046131"), "Empid" : 101, "Name" : { "FName" : "Aditya", "LName" : "Sarwade" }, "CompanyName" : "TCS", "Salary" : 7882000, "Designation" : "Tester", "Age" : 20, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "13-10-2003", "Emailid" : "aditya@gmail.com", "Contact" : "7478567801", "Address" : [ { "PAddr" : "1941 Mahu", "LAddr" : "Madhya Pradesh" }, { "PAddr" : "1410 NG", "LAddr" : "Madhya Pradesh" } ] }
+{ "_id" : ObjectId("6530e7fb3ceb634204046132"), "Empid" : 102, "Name" : { "FName" : "Brian", "LName" : "DSouza" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Programmer", "Age" : 23, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "31-03-2003", "Emailid" : "brian@gmail.com", "Contact" : "7415267801", "Address" : [ { "PAddr" : "123 ghs", "LAddr" : "Kerala" }, { "PAddr" : "78 kbr", "LAddr" : "Kerala" } ] }
+{ "_id" : ObjectId("6530e8793ceb634204046133"), "Empid" : 103, "Name" : { "FName" : "Shantanu", "LName" : "Bhosale" }, "CompanyName" : "Tesla", "Salary" : 2333334, "Designation" : "Tester", "Age" : 14, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "21-02-2003", "Emailid" : "shantanu@gmail.com", "Contact" : "7415262001", "Address" : [ { "PAddr" : "123 GHF", "LAddr" : "Pune" }, { "PAddr" : "789 GHJ", "LAddr" : "Pune" } ] }
+{ "_id" : ObjectId("6530ea443ceb634204046136"), "Empid" : 106, "Name" : { "FName" : "Rida", "LName" : "Shaikh" }, "CompanyName" : "Bajaj", "Salary" : 78000, "Designation" : "DBA", "Age" : 27, "Expertise" : [ "Java", "vb.NET", "Cassandra" ], "DOB" : "15-05-2005", "Emailid" : "rida@gmail.com", "Contact" : "7005114501", "Address" : [ { "PAddr" : "123 wer", "LAddr" : "Thane" }, { "PAddr" : "789 lij", "LAddr" : "Thane" } ] }
+{ "_id" : ObjectId("6530ead03ceb634204046137"), "Empid" : 107, "Name" : { "FName" : "Suraj", "LName" : "Gawade" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Tester", "Age" : 27, "Expertise" : [ "Mongodb", "Java", "Cassandra" ], "DOB" : "23-08-2003", "Emailid" : "suraj@gmail.com", "Contact" : "7003314501", "Address" : [ { "PAddr" : "34 Main st", "LAddr" : "Thane" }, { "PAddr" : "34 Main st", "LAddr" : "Thane" } ] }
+{ "_id" : ObjectId("6530ec363ceb634204046139"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Gawade" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+{ "_id" : ObjectId("6530ecad3ceb63420404613a"), "Empid" : 110, "Name" : { "FName" : "Pankaj", "LName" : "Khanna" }, "CompanyName" : "Infinix", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "16-07-2003", "Emailid" : "pankaj@gmail.com", "Contact" : "7878964501", "Address" : [ { "PAddr" : "Chakan road", "LAddr" : "Delhi" }, { "PAddr" : "Chakan road", "LAddr" : "Delhi" } ] }
+{ "_id" : ObjectId("6530ed9e3ceb63420404613b"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Shinde" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 25, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+> db.Employee.find({"CompanyName":"Infosys"},{"_id":1,"Designation":1,"Address":1,"Name":1});
+{ "_id" : ObjectId("6530e7fb3ceb634204046132"), "Name" : { "FName" : "Brian", "LName" : "DSouza" }, "Designation" : "Programmer", "Address" : [ { "PAddr" : "123 ghs", "LAddr" : "Kerala" }, { "PAddr" : "78 kbr", "LAddr" : "Kerala" } ] }
+{ "_id" : ObjectId("6530ead03ceb634204046137"), "Name" : { "FName" : "Suraj", "LName" : "Gawade" }, "Designation" : "Tester", "Address" : [ { "PAddr" : "34 Main st", "LAddr" : "Thane" }, { "PAddr" : "34 Main st", "LAddr" : "Thane" } ] }
+> db.Employee.find({"Designation":{$in:["Developer","Tester"]}});
+{ "_id" : ObjectId("6530e7783ceb634204046131"), "Empid" : 101, "Name" : { "FName" : "Aditya", "LName" : "Sarwade" }, "CompanyName" : "TCS", "Salary" : 7882000, "Designation" : "Tester", "Age" : 20, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "13-10-2003", "Emailid" : "aditya@gmail.com", "Contact" : "7478567801", "Address" : [ { "PAddr" : "1941 Mahu", "LAddr" : "Madhya Pradesh" }, { "PAddr" : "1410 NG", "LAddr" : "Madhya Pradesh" } ] }
+{ "_id" : ObjectId("6530e8793ceb634204046133"), "Empid" : 103, "Name" : { "FName" : "Shantanu", "LName" : "Bhosale" }, "CompanyName" : "Tesla", "Salary" : 2333334, "Designation" : "Tester", "Age" : 14, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "21-02-2003", "Emailid" : "shantanu@gmail.com", "Contact" : "7415262001", "Address" : [ { "PAddr" : "123 GHF", "LAddr" : "Pune" }, { "PAddr" : "789 GHJ", "LAddr" : "Pune" } ] }
+{ "_id" : ObjectId("6530e8e93ceb634204046134"), "Empid" : 104, "Name" : { "FName" : "Mahesh", "LName" : "Bhabad" }, "CompanyName" : "Indica", "Salary" : 340000, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "14-04-2003", "Emailid" : "mahesh@gmail.com", "Contact" : "7415112001", "Address" : [ { "PAddr" : "123 SDF", "LAddr" : "Akurdi" }, { "PAddr" : "789 FGH", "LAddr" : "Akurdi" } ] }
+{ "_id" : ObjectId("6530e99e3ceb634204046135"), "Empid" : 105, "Name" : { "FName" : "Shraddha", "LName" : "Lalbegee" }, "CompanyName" : "IBM", "Salary" : 344555, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "16-02-2003", "Emailid" : "shraddha@gmail.com", "Contact" : "7415114501", "Address" : [ { "PAddr" : "123 JMN", "LAddr" : "Dapodi" }, { "PAddr" : "789 FGH", "LAddr" : "Dapodi" } ] }
+{ "_id" : ObjectId("6530ead03ceb634204046137"), "Empid" : 107, "Name" : { "FName" : "Suraj", "LName" : "Gawade" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Tester", "Age" : 27, "Expertise" : [ "Mongodb", "Java", "Cassandra" ], "DOB" : "23-08-2003", "Emailid" : "suraj@gmail.com", "Contact" : "7003314501", "Address" : [ { "PAddr" : "34 Main st", "LAddr" : "Thane" }, { "PAddr" : "34 Main st", "LAddr" : "Thane" } ] }
+{ "_id" : ObjectId("6530eb8c3ceb634204046138"), "Empid" : 108, "Name" : { "FName" : "Yash", "LName" : "Shivtare" }, "CompanyName" : "Red hat", "Salary" : 457800, "Designation" : "Developer", "Age" : 28, "Expertise" : [ "Python", "MySQL", "MongoDB" ], "DOB" : "20-08-2003", "Emailid" : "yash@gmail.com", "Contact" : "7079314501", "Address" : [ { "PAddr" : "560 Main road", "LAddr" : "Karnataka" }, { "PAddr" : "560 Main road", "LAddr" : "Karnataka" } ] }
+{ "_id" : ObjectId("6530ec363ceb634204046139"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Gawade" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+{ "_id" : ObjectId("6530ecad3ceb63420404613a"), "Empid" : 110, "Name" : { "FName" : "Pankaj", "LName" : "Khanna" }, "CompanyName" : "Infinix", "Salary" : 500000, "Designation" : "Tester", "Age" : 30, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "16-07-2003", "Emailid" : "pankaj@gmail.com", "Contact" : "7878964501", "Address" : [ { "PAddr" : "Chakan road", "LAddr" : "Delhi" }, { "PAddr" : "Chakan road", "LAddr" : "Delhi" } ] }
+{ "_id" : ObjectId("6530ed9e3ceb63420404613b"), "Empid" : 109, "Name" : { "FName" : "Atharva", "LName" : "Shinde" }, "CompanyName" : "Lenovo", "Salary" : 500000, "Designation" : "Tester", "Age" : 25, "Expertise" : [ "HTML", "CSS", "Javascript" ], "DOB" : "17-07-2003", "Emailid" : "atharva@gmail.com", "Contact" : "707931501", "Address" : [ { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" }, { "PAddr" : "560 nagar road", "LAddr" : "Karnataka" } ] }
+> db.Employee.find({"Expertise":"MongoDB","MySQL","Cassandra"]});
+2023-10-19T14:31:46.536+0530 E QUERY    [thread1] SyntaxError: missing : after property id @(shell):1:47
+> db.Employee.find({"Expertise":["MongoDB","MySQL","Cassandra"]});
+{ "_id" : ObjectId("6530e7783ceb634204046131"), "Empid" : 101, "Name" : { "FName" : "Aditya", "LName" : "Sarwade" }, "CompanyName" : "TCS", "Salary" : 7882000, "Designation" : "Tester", "Age" : 20, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "13-10-2003", "Emailid" : "aditya@gmail.com", "Contact" : "7478567801", "Address" : [ { "PAddr" : "1941 Mahu", "LAddr" : "Madhya Pradesh" }, { "PAddr" : "1410 NG", "LAddr" : "Madhya Pradesh" } ] }
+{ "_id" : ObjectId("6530e7fb3ceb634204046132"), "Empid" : 102, "Name" : { "FName" : "Brian", "LName" : "DSouza" }, "CompanyName" : "Infosys", "Salary" : 450000, "Designation" : "Programmer", "Age" : 23, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "31-03-2003", "Emailid" : "brian@gmail.com", "Contact" : "7415267801", "Address" : [ { "PAddr" : "123 ghs", "LAddr" : "Kerala" }, { "PAddr" : "78 kbr", "LAddr" : "Kerala" } ] }
+{ "_id" : ObjectId("6530e8793ceb634204046133"), "Empid" : 103, "Name" : { "FName" : "Shantanu", "LName" : "Bhosale" }, "CompanyName" : "Tesla", "Salary" : 2333334, "Designation" : "Tester", "Age" : 14, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "21-02-2003", "Emailid" : "shantanu@gmail.com", "Contact" : "7415262001", "Address" : [ { "PAddr" : "123 GHF", "LAddr" : "Pune" }, { "PAddr" : "789 GHJ", "LAddr" : "Pune" } ] }
+{ "_id" : ObjectId("6530e8e93ceb634204046134"), "Empid" : 104, "Name" : { "FName" : "Mahesh", "LName" : "Bhabad" }, "CompanyName" : "Indica", "Salary" : 340000, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "14-04-2003", "Emailid" : "mahesh@gmail.com", "Contact" : "7415112001", "Address" : [ { "PAddr" : "123 SDF", "LAddr" : "Akurdi" }, { "PAddr" : "789 FGH", "LAddr" : "Akurdi" } ] }
+{ "_id" : ObjectId("6530e99e3ceb634204046135"), "Empid" : 105, "Name" : { "FName" : "Shraddha", "LName" : "Lalbegee" }, "CompanyName" : "IBM", "Salary" : 344555, "Designation" : "Developer", "Age" : 22, "Expertise" : [ "MongoDB", "MySQL", "Cassandra" ], "DOB" : "16-02-2003", "Emailid" : "shraddha@gmail.com", "Contact" : "7415114501", "Address" : [ { "PAddr" : "123 JMN", "LAddr" : "Dapodi" }, { "PAddr" : "789 FGH", "LAddr" : "Dapodi" } ] }
+> db.Employee.find().prerty()
+2023-10-19T14:32:51.496+0530 E QUERY    [thread1] TypeError: db.Employee.find(...).prerty is not a function :
+@(shell):1:1
+> db.Employee.find().preety()
+2023-10-19T14:32:55.696+0530 E QUERY    [thread1] TypeError: db.Employee.find(...).preety is not a function :
+@(shell):1:1
+> db.Employee.find().pretty()
+{
+	"_id" : ObjectId("6530e7783ceb634204046131"),
+	"Empid" : 101,
+	"Name" : {
+		"FName" : "Aditya",
+		"LName" : "Sarwade"
+	},
+	"CompanyName" : "TCS",
+	"Salary" : 7882000,
+	"Designation" : "Tester",
+	"Age" : 20,
+	"Expertise" : [
+		"MongoDB",
+		"MySQL",
+		"Cassandra"
+	],
+	"DOB" : "13-10-2003",
+	"Emailid" : "aditya@gmail.com",
+	"Contact" : "7478567801",
+	"Address" : [
+		{
+			"PAddr" : "1941 Mahu",
+			"LAddr" : "Madhya Pradesh"
+		},
+		{
+			"PAddr" : "1410 NG",
+			"LAddr" : "Madhya Pradesh"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530e7fb3ceb634204046132"),
+	"Empid" : 102,
+	"Name" : {
+		"FName" : "Brian",
+		"LName" : "DSouza"
+	},
+	"CompanyName" : "Infosys",
+	"Salary" : 450000,
+	"Designation" : "Programmer",
+	"Age" : 23,
+	"Expertise" : [
+		"MongoDB",
+		"MySQL",
+		"Cassandra"
+	],
+	"DOB" : "31-03-2003",
+	"Emailid" : "brian@gmail.com",
+	"Contact" : "7415267801",
+	"Address" : [
+		{
+			"PAddr" : "123 ghs",
+			"LAddr" : "Kerala"
+		},
+		{
+			"PAddr" : "78 kbr",
+			"LAddr" : "Kerala"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530e8793ceb634204046133"),
+	"Empid" : 103,
+	"Name" : {
+		"FName" : "Shantanu",
+		"LName" : "Bhosale"
+	},
+	"CompanyName" : "Tesla",
+	"Salary" : 2333334,
+	"Designation" : "Tester",
+	"Age" : 14,
+	"Expertise" : [
+		"MongoDB",
+		"MySQL",
+		"Cassandra"
+	],
+	"DOB" : "21-02-2003",
+	"Emailid" : "shantanu@gmail.com",
+	"Contact" : "7415262001",
+	"Address" : [
+		{
+			"PAddr" : "123 GHF",
+			"LAddr" : "Pune"
+		},
+		{
+			"PAddr" : "789 GHJ",
+			"LAddr" : "Pune"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530e8e93ceb634204046134"),
+	"Empid" : 104,
+	"Name" : {
+		"FName" : "Mahesh",
+		"LName" : "Bhabad"
+	},
+	"CompanyName" : "Indica",
+	"Salary" : 340000,
+	"Designation" : "Developer",
+	"Age" : 22,
+	"Expertise" : [
+		"MongoDB",
+		"MySQL",
+		"Cassandra"
+	],
+	"DOB" : "14-04-2003",
+	"Emailid" : "mahesh@gmail.com",
+	"Contact" : "7415112001",
+	"Address" : [
+		{
+			"PAddr" : "123 SDF",
+			"LAddr" : "Akurdi"
+		},
+		{
+			"PAddr" : "789 FGH",
+			"LAddr" : "Akurdi"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530e99e3ceb634204046135"),
+	"Empid" : 105,
+	"Name" : {
+		"FName" : "Shraddha",
+		"LName" : "Lalbegee"
+	},
+	"CompanyName" : "IBM",
+	"Salary" : 344555,
+	"Designation" : "Developer",
+	"Age" : 22,
+	"Expertise" : [
+		"MongoDB",
+		"MySQL",
+		"Cassandra"
+	],
+	"DOB" : "16-02-2003",
+	"Emailid" : "shraddha@gmail.com",
+	"Contact" : "7415114501",
+	"Address" : [
+		{
+			"PAddr" : "123 JMN",
+			"LAddr" : "Dapodi"
+		},
+		{
+			"PAddr" : "789 FGH",
+			"LAddr" : "Dapodi"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530ea443ceb634204046136"),
+	"Empid" : 106,
+	"Name" : {
+		"FName" : "Rida",
+		"LName" : "Shaikh"
+	},
+	"CompanyName" : "Bajaj",
+	"Salary" : 78000,
+	"Designation" : "DBA",
+	"Age" : 27,
+	"Expertise" : [
+		"Java",
+		"vb.NET",
+		"Cassandra"
+	],
+	"DOB" : "15-05-2005",
+	"Emailid" : "rida@gmail.com",
+	"Contact" : "7005114501",
+	"Address" : [
+		{
+			"PAddr" : "123 wer",
+			"LAddr" : "Thane"
+		},
+		{
+			"PAddr" : "789 lij",
+			"LAddr" : "Thane"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530ead03ceb634204046137"),
+	"Empid" : 107,
+	"Name" : {
+		"FName" : "Suraj",
+		"LName" : "Gawade"
+	},
+	"CompanyName" : "Infosys",
+	"Salary" : 450000,
+	"Designation" : "Tester",
+	"Age" : 27,
+	"Expertise" : [
+		"Mongodb",
+		"Java",
+		"Cassandra"
+	],
+	"DOB" : "23-08-2003",
+	"Emailid" : "suraj@gmail.com",
+	"Contact" : "7003314501",
+	"Address" : [
+		{
+			"PAddr" : "34 Main st",
+			"LAddr" : "Thane"
+		},
+		{
+			"PAddr" : "34 Main st",
+			"LAddr" : "Thane"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530eb8c3ceb634204046138"),
+	"Empid" : 108,
+	"Name" : {
+		"FName" : "Yash",
+		"LName" : "Shivtare"
+	},
+	"CompanyName" : "Red hat",
+	"Salary" : 457800,
+	"Designation" : "Developer",
+	"Age" : 28,
+	"Expertise" : [
+		"Python",
+		"MySQL",
+		"MongoDB"
+	],
+	"DOB" : "20-08-2003",
+	"Emailid" : "yash@gmail.com",
+	"Contact" : "7079314501",
+	"Address" : [
+		{
+			"PAddr" : "560 Main road",
+			"LAddr" : "Karnataka"
+		},
+		{
+			"PAddr" : "560 Main road",
+			"LAddr" : "Karnataka"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530ec363ceb634204046139"),
+	"Empid" : 109,
+	"Name" : {
+		"FName" : "Atharva",
+		"LName" : "Gawade"
+	},
+	"CompanyName" : "Lenovo",
+	"Salary" : 500000,
+	"Designation" : "Tester",
+	"Age" : 30,
+	"Expertise" : [
+		"HTML",
+		"CSS",
+		"Javascript"
+	],
+	"DOB" : "17-07-2003",
+	"Emailid" : "atharva@gmail.com",
+	"Contact" : "707931501",
+	"Address" : [
+		{
+			"PAddr" : "560 nagar road",
+			"LAddr" : "Karnataka"
+		},
+		{
+			"PAddr" : "560 nagar road",
+			"LAddr" : "Karnataka"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530ecad3ceb63420404613a"),
+	"Empid" : 110,
+	"Name" : {
+		"FName" : "Pankaj",
+		"LName" : "Khanna"
+	},
+	"CompanyName" : "Infinix",
+	"Salary" : 500000,
+	"Designation" : "Tester",
+	"Age" : 30,
+	"Expertise" : [
+		"HTML",
+		"CSS",
+		"Javascript"
+	],
+	"DOB" : "16-07-2003",
+	"Emailid" : "pankaj@gmail.com",
+	"Contact" : "7878964501",
+	"Address" : [
+		{
+			"PAddr" : "Chakan road",
+			"LAddr" : "Delhi"
+		},
+		{
+			"PAddr" : "Chakan road",
+			"LAddr" : "Delhi"
+		}
+	]
+}
+{
+	"_id" : ObjectId("6530ed9e3ceb63420404613b"),
+	"Empid" : 109,
+	"Name" : {
+		"FName" : "Atharva",
+		"LName" : "Shinde"
+	},
+	"CompanyName" : "Lenovo",
+	"Salary" : 500000,
+	"Designation" : "Tester",
+	"Age" : 25,
+	"Expertise" : [
+		"HTML",
+		"CSS",
+		"Javascript"
+	],
+	"DOB" : "17-07-2003",
+	"Emailid" : "atharva@gmail.com",
+	"Contact" : "707931501",
+	"Address" : [
+		{
+			"PAddr" : "560 nagar road",
+			"LAddr" : "Karnataka"
+		},
+		{
+			"PAddr" : "560 nagar road",
+			"LAddr" : "Karnataka"
+		}
+	]
+}
+> db.Employee.remove({"Designation":"Developer"},{justOne:true});
+WriteResult({ "nRemoved" : 1 })
+> 
+

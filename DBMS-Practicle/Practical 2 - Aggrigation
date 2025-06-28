@@ -1,0 +1,228 @@
+admin1@410-14:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Server has startup warnings: 
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] 
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] 
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] 
+> show dbs
+Database          0.000GB
+Empdb             0.000GB
+Empdb1            0.000GB
+Empdb2            0.000GB
+EmployeeDatabase  0.000GB
+Rida              0.000GB
+admin             0.000GB
+config            0.000GB
+local             0.000GB
+r78Aditya         0.000GB
+> use r78Aditya
+switched to db r78Aditya
+> show collections
+Employee
+> db.Employee.find()
+{ "_id" : ObjectId("651cd67e32faa2d420d7acee"), "id" : 1, "Name" : "Aditya", "age" : 18, "address" : "TamilNadu", "salary" : 15000, "company" : "TCS", "designation" : "AI Developer", "expertise" : "mysql" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf0"), "id" : 3, "Name" : "Ajinkya", "age" : 26, "address" : "Pune", "salary" : 154000, "company" : "IBM", "designation" : "Tester", "expertise" : "casendra" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf1"), "id" : 4, "Name" : "Atharva", "age" : 20, "address" : "Pimpri", "salary" : 8900000, "company" : "Persistent", "designation" : "Developer", "expertise" : "mysql" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf2"), "id" : 5, "Name" : "Suraj", "age" : 20, "address" : "Pune", "salary" : 450000, "company" : "Google", "designation" : "Developer", "expertise" : "casendra" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf3"), "id" : 6, "Name" : "Shrikar", "age" : 20, "address" : "Pune", "salary" : 8900000, "company" : "Wipro", "designation" : "tester", "expertise" : "casendra" }
+> exit
+bye
+admin1@410-14:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Server has startup warnings: 
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] 
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2023-10-11T10:15:48.837+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] 
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2023-10-11T10:15:54.537+0530 I CONTROL  [initandlisten] 
+> show dbs
+Aditya            0.000GB
+Database          0.000GB
+Empdb             0.000GB
+Empdb1            0.000GB
+Empdb2            0.000GB
+EmployeeDatabase  0.000GB
+Rida              0.000GB
+admin             0.000GB
+config            0.000GB
+local             0.000GB
+r78Aditya         0.000GB
+> show collections
+> db.Employee.find()
+> use r78Aditya
+switched to db r78Aditya
+> db.Employee.find()
+{ "_id" : ObjectId("651cd67e32faa2d420d7acee"), "id" : 1, "Name" : "Aditya", "age" : 18, "address" : "TamilNadu", "salary" : 15000, "company" : "TCS", "designation" : "AI Developer", "expertise" : "mysql" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf0"), "id" : 3, "Name" : "Ajinkya", "age" : 26, "address" : "Pune", "salary" : 154000, "company" : "IBM", "designation" : "Tester", "expertise" : "casendra" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf1"), "id" : 4, "Name" : "Atharva", "age" : 20, "address" : "Pimpri", "salary" : 8900000, "company" : "Persistent", "designation" : "Developer", "expertise" : "mysql" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf2"), "id" : 5, "Name" : "Suraj", "age" : 20, "address" : "Pune", "salary" : 450000, "company" : "Google", "designation" : "Developer", "expertise" : "casendra" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf3"), "id" : 6, "Name" : "Shrikar", "age" : 20, "address" : "Pune", "salary" : 8900000, "company" : "Wipro", "designation" : "tester", "expertise" : "casendra" }
+> db.Employee.aggregate([{
+... $group:{
+... _id:"$designation",
+... salary:{$sum:"$salary"}}
+... },
+... {
+... $match:{salary:{$gt:200000}}
+... }
+... ]);
+{ "_id" : "tester", "salary" : 8900000 }
+{ "_id" : "Developer", "salary" : 9350000 }
+> db.Employee.aggregate([{
+... $match:{designation:"DBA"}
+... },
+... {
+... $group:{
+... _id:"$address",
+... salary:{$sum:"$salary"}
+... }}
+... ]);
+> db.Employee.aggregate([{ $match:{designation:"DBA"} }, { $group:{ _id:"$address", salary:{$sum:"$salary"} }} ]);
+> db.Employee.aggregate([{ $match:{designation:"DBA"} }, { $group:{ _id:"$address", salary:{$sum:"$salary"} }} ]);
+> db.Employee.aggregate([{ $match:{"$designation"} }, { $group:{ _id:"$address", salary:{$sum:"$salary"} }} ]);
+2023-10-11T10:54:37.696+0530 E QUERY    [thread1] SyntaxError: missing : after property id @(shell):1:47
+> db.Employee.aggregate([{ $match:{_id: "$designation"} }, { $group:{ _id:"$address", salary:{$sum:"$salary"} }} ]);
+> db.Employee.aggregate([{ $match:{_id: "$designation"} }, { $group:{ _id:"$address", salary:{$sum:"$salary"} }} ]);
+> db.Employee.aggregate([{ $match:{_id: "$designation"} }, { $group:{ _id:"$address", "salary":{$sum:"$salary"} }} ]);
+> db.Employee.aggregate([
+... {
+... $match: { designation:"DBA"}
+... },
+... {
+... $group:{
+... _id: "$address",
+... totalSalary: {$sum:"$salary"}
+... }
+... }
+... ]);
+> db.Employee.aggregate([ { $match: { designation:"DBA"} }, { $group:{ _id: "$address", totalSalary: {$sum:"$salary"} } } ]);
+> db.Employee.aggregate([ { $match: { designation:"DBA"} }, { $group:{ _id: "$address", salary: {$sum:"$salary"} } } ]);
+> db.Employee.insertOne({id:7,Name:"Baburao",age:52,address:"Shaitan galli",salary:20000000,company:"Orchestra",designation:"DBA"})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("652635f5f74c2de9985a0e4d")
+}
+> db.Employee.aggregate([ { $match: { designation:"DBA"} }, { $group:{ _id: "$address", salary: {$sum:"$salary"} } } ]);
+{ "_id" : "Shaitan galli", "salary" : 20000000 }
+> db.Employee.aggregate([
+... {
+... $match:{ designation:"DBA"}
+... },
+... {
+... $group:{
+... _id:"$company",
+... salary:{$sum: "$salary"}
+... }
+... }
+... ]);
+{ "_id" : "Orchestra", "salary" : 20000000 }
+> db.Employee.aggregate([
+... {
+... $project:{
+... _id:1,
+... Name:{$toUpper:"$Name"}
+... }
+... },
+... {
+... $sort:{Name:1}
+... }
+... ]);
+{ "_id" : ObjectId("651cd67e32faa2d420d7acee"), "Name" : "ADITYA" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf0"), "Name" : "AJINKYA" }
+{ "_id" : ObjectId("651cd72d32faa2d420d7acf1"), "Name" : "ATHARVA" }
+{ "_id" : ObjectId("652635f5f74c2de9985a0e4d"), "Name" : "BABURAO" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf3"), "Name" : "SHRIKAR" }
+{ "_id" : ObjectId("651cd7b032faa2d420d7acf2"), "Name" : "SURAJ" }
+> db.Emplopyee.aggregate([
+... {
+... $group: {
+... _id:null,
+... count:{$sum:1}
+... }
+... }
+... ]);
+> db.Emplopyee.aggregate([ { $group: { _id:"$designation", count:{$sum:1} } } ]);
+> db.Employee.aggregate([
+... {
+... $group:{
+... _id:"$designation",
+... AvgSal:{$avg:"$salary"}
+... }
+... },
+... {
+... $sort:{AvgSal:1}
+... }
+... ]);
+{ "_id" : "AI Developer", "AvgSal" : 15000 }
+{ "_id" : "Tester", "AvgSal" : 154000 }
+{ "_id" : "Developer", "AvgSal" : 4675000 }
+{ "_id" : "tester", "AvgSal" : 8900000 }
+{ "_id" : "DBA", "AvgSal" : 20000000 }
+> db.Employee.insertOne({id:8,Name:"Swapnil",age:32,address:"Pimpri",salary:20000000,company:"IBM",designation:"DBA"})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("65263982f74c2de9985a0e4e")
+}
+> db.Employee.aggregate([
+... {
+... $match:{ Name:"Swapnil"}
+... },
+... {
+... $unwind:"$Expertise"
+... }
+... ]);
+> db.Employee.aggregate([ { $match:{ Name:"Swapnil"} }, { $unwind:"$expertise" } ]);
+> db.Employee.aggregate([
+... {
+... $unwind:"$expertise"
+... },
+... {
+... $group:{
+... _id:"$expertise",
+... total:{$sum:1}
+... }
+... }
+... ]);
+{ "_id" : "casendra", "total" : 3 }
+{ "_id" : "mysql", "total" : 2 }
+> db.Employee.aggregate([
+... {
+... $match:{address:"Pune"}
+... },
+... {
+... $group:{
+... _id:"$designation",
+... Employees:{$push:"$Name"}
+... }
+... }
+... ]);
+{ "_id" : "tester", "Employees" : [ "Shrikar" ] }
+{ "_id" : "Developer", "Employees" : [ "Suraj" ] }
+{ "_id" : "Tester", "Employees" : [ "Ajinkya" ] }
+> db.Employee.aggregate([
+... {
+... $group:{
+... _id:"$company",
+... MaxSalary:{$max:"$salary"},
+... MinSalary:{$min:"$salary"}
+... }
+... }
+... ]);
+{ "_id" : "Orchestra", "MaxSalary" : 20000000, "MinSalary" : 20000000 }
+{ "_id" : "Wipro", "MaxSalary" : 8900000, "MinSalary" : 8900000 }
+{ "_id" : "TCS", "MaxSalary" : 15000, "MinSalary" : 15000 }
+{ "_id" : "Persistent", "MaxSalary" : 8900000, "MinSalary" : 8900000 }
+{ "_id" : "IBM", "MaxSalary" : 20000000, "MinSalary" : 154000 }
+{ "_id" : "Google", "MaxSalary" : 450000, "MinSalary" : 450000 }
+> 
+

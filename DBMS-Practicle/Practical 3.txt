@@ -1,0 +1,426 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+|                    |
+| bank               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use bank;
+Database changed
+mysql> show tables;
++-----------------------+
+| Tables_in_bank        |
++-----------------------+
+| account               |
+| borrower              |
+| branch                |
+| customer              |
+| depositor             |
+| loan                  |
++-----------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Account;
++--------+-------------+---------+
+| Acc_no | Branch_name | Balance |
++--------+-------------+---------+
+|      1 | ABC         |   13900 |
+|      2 | ASD         | 1322900 |
+|      3 | JKL         |  765000 |
+|      4 | LMN         |  876000 |
+|      5 | MNB         | 9976000 |
+|      6 | QWE         |  450000 |
+|      7 | MNB         | 9976000 |
+|      8 | TRE         |   96000 |
+|      9 | XYZ         | 7892300 |
+|     10 | ZXC         |  450000 |
++--------+-------------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Branch;
++-------------+-------------+---------+
+| Branch_name | Branch_city | Assets  |
++-------------+-------------+---------+
+| ABC         | Pune        |  175000 |
+| ASD         | Chennai     |  475100 |
+| JKL         | Banglore    |  250000 |
+| LMN         | Akurdi      |  854000 |
+| MNB         | TamilNadu   |  650008 |
+| QWE         | Kothrud     |  135000 |
+| TRE         | Deccan      |  875000 |
+| TYU         | Kerala      | 8765000 |
+| XYZ         | Kolkata     | 7577000 |
+| ZXC         | Punjab      | 2980000 |
++-------------+-------------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Borrower;
++-----------+---------+
+| Cust_name | Loan_no |
++-----------+---------+
+| Aditya    |      11 |
+| Ajinkya   |      12 |
+| Shantanu  |      13 |
+| Suraj     |      14 |
+| Brian     |      15 |
+| Sarthak   |      16 |
+| Prenit    |      17 |
+| Virat     |      18 |
+| Chris     |      19 |
+| Yuvraj    |      20 |
++-----------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Customer;
++-----------+-------------+-----------+
+| Cust_name | Cust_street | Cust_city |
++-----------+-------------+-----------+
+| Aditya    | QWER        | Pune      |
+| Ajinkya   | ACSD        | Akurdi    |
+| Brian     | HFDE        | Punjab    |
+| Chris     | DFGH        | Kolkata   |
+| Prenit    | TGBH        | Kerala    |
+| Sarthak   | MNTR        | Punjab    |
+| Shantanu  | QAWE        | Banglore  |
+| Suraj     | ACSD        | Deccan    |
+| Virat     | IOLP        | TamilNadu |
+| Yuvraj    | MKLJ        | Chennai   |
++-----------+-------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Depositor;
++-----------+--------+
+| Cust_name | Acc_no |
++-----------+--------+
+| Aditya    |      1 |
+| Ajinkya   |      2 |
+| Shantanu  |      3 |
+| Suraj     |      4 |
+| Brian     |      5 |
+| Sarthak   |      6 |
+| Prenit    |      7 |
+| Virat     |      8 |
+| Chris     |      9 |
+| Yuvraj    |     10 |
++-----------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Loan;
++---------+-------------+---------+
+| Loan_no | Branch_name | Amount  |
++---------+-------------+---------+
+|      11 | ABC         | 1220000 |
+|      12 | ASD         |  157000 |
+|      13 | JKL         | 9500000 |
+|      14 | LMN         |  650000 |
+|      15 | MNB         |  860000 |
+|      16 | QWE         |    4500 |
+|      17 | TRE         | 4505550 |
+|      18 | XYZ         | 4505550 |
+|      19 | ZXC         |  455600 |
+|      20 | ASD         |  455600 |
++---------+-------------+---------+
+10 rows in set (0.00 sec)
+
+Q1. Create a View1 to display List all customers in alphabetical order who have loan from Pune_Station branch.
+
+mysql> create view view1 as
+    -> select distinct C.Cust_name
+    -> from Customer C
+    -> inner join Borrower B on C.Cust_name = B.Cust_name
+    -> inner join Loan L on B.Loan_no = L.Loan_no
+    -> where L.branch_name = "Pune Station"
+    -> order by C.Cust_name;
+Query OK, 0 rows affected (0.01 sec)
+
+Q2. Create View2 on branch table by selecting any two columns and perform insert update delete operations
+
+mysql> select * from view1;
+Empty set (0.00 sec)
+
+Q3. Create View3 on borrower and depositor table by selecting any one column from each table perform insert update delete operations
+
+mysql> create view view2 as
+    -> select Branch_name,Branch_city
+    -> from Branch;
+Query OK, 0 rows affected (0.01 sec)
+
+Q4. Create Union of left and right joint for all customers who have an account or loan or both at bank
+
+mysql> insert into view2(Branch_name,Branch_city)
+    -> values("Wadgaon sheri","Pune");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> update view2
+    -> set Branch_city = "Pune"
+    -> where Branch_name = "ABC";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> delete from view2
+    -> where Branch_name="ASD";
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`aditya_bank`.`account`, CONSTRAINT `account_ibfk_1` FOREIGN KEY (`Branch_name`) REFERENCES `branch` (`Branch_name`))
+mysql>
+mysql> create view view3 as
+    -> select B.Cust_name
+    -> from Borrower B
+    -> union
+    -> select D.Cust_name
+    -> from Depositor D;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into view3(Cust_name) values("Sarwade Aditya");
+ERROR 1471 (HY000): The target table view3 of the INSERT is not insertable-into
+mysql>
+mysql> update view3 set Cust_name = "Pranit" where Cust_name = "Prenit";
+ERROR 1288 (HY000): The target table view3 of the UPDATE is not updatable
+mysql>
+mysql> delete from view3 where Cust_name = "Aditya";
+ERROR 1288 (HY000): The target table view3 of the DELETE is not updatable
+mysql>
+mysql> select C.Cust_name from Customer C left join Depositor D on C.Cust_name = D.Cust_name left join Borrower B on C.Cust_name = B.Cust_name where B.Cust_name is not null union
+    -> select C.Cust_name from Customer C right join Depositor D on C.Cust_name = D.Cust_name right join Borrower B on C.Cust_name = B.Cust_name where B.Cust_name is not null;
++-----------+
+| Cust_name |
++-----------+
+| Aditya    |
+| Ajinkya   |
+| Brian     |
+| Chris     |
+| Prenit    |
+| Sarthak   |
+| Shantanu  |
+| Suraj     |
+| Virat     |
+| Yuvraj    |
++-----------+
+10 rows in set (0.00 sec)
+
+Q.Display content of View1.
+
+mysql> select * from View1;
+Empty set (0.00 sec)
+
+Q.Display content of View2.
+
+mysql> select * from View2;
++---------------+-------------+
+| Branch_name   | Branch_city |
++---------------+-------------+
+| ABC           | Pune        |
+| ASD           | Chennai     |
+| JKL           | Banglore    |
+| LMN           | Akurdi      |
+| MNB           | TamilNadu   |
+| QWE           | Kothrud     |
+| TRE           | Deccan      |
+| TYU           | Kerala      |
+| Wadgaon sheri | Pune        |
+| XYZ           | Kolkata     |
+| ZXC           | Punjab      |
++---------------+-------------+
+11 rows in set (0.00 sec)
+
+Q. Display content of View3.
+
+mysql> select * from View3;
++-----------+
+| Cust_name |
++-----------+
+| Aditya    |
+| Ajinkya   |
+| Brian     |
+| Chris     |
+| Prenit    |
+| Sarthak   |
+| Shantanu  |
+| Suraj     |
+| Virat     |
+| Yuvraj    |
++-----------+
+10 rows in set (0.00 sec)
+
+Q6.	Create Simple and Unique index.
+mysql> create index idx_branch_name on Branch(Branch_name);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create unique index idx_unique_column_name on Customer(Cust_name);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Q7.	Display index Information
+
+mysql> show index from Branch;
++--------+------------+-----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table  | Non_unique | Key_name        | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------+------------+-----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| branch |          0 | PRIMARY         |            1 | Branch_name | A         |           8 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| branch |          1 | idx_branch_name |            1 | Branch_name | A         |           9 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++--------+------------+-----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql> show index from Customer;
++----------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name               | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| customer |          0 | PRIMARY                |            1 | Cust_name   | A         |           8 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| customer |          0 | idx_unique_column_name |            1 | Cust_name   | A         |           8 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> set foreign_key_checks = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> truncate table Customer;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> set foreign_key_checks = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from Customer;
+Empty set (0.00 sec)
+
+mysql>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Microsoft Windows [Version 10.0.19044.3448]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Admin>mysql -u Aditya -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database Comporders;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use Comporders;
+Database changed
+mysql> create table Companies(Comp_id varchar(10), Name varchar(5),Cost int,Year int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into Companies values("C001","ONGC",2000,2010);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Companies values("C002","HPCL",2500,2012);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Companies values("C005","IOCL",1000,2014);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Companies values("C006","BHEL",3000,2015);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Companies;
++---------+------+------+------+
+| Comp_id | Name | Cost | Year |
++---------+------+------+------+
+| C001    | ONGC | 2000 | 2010 |
+| C002    | HPCL | 2500 | 2012 |
+| C005    | IOCL | 1000 | 2014 |
+| C006    | BHEL | 3000 | 2015 |
++---------+------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> create table Orders(Comp_id varchar(10), Domain varchar(10),Quantity int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into Orders values("C001","Oil",109);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Orders values("C002","Gas",121);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Orders values("C005","Telecom",115);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select Name,Cost,Domain,Quantity
+    -> from Companies
+    -> inner join orders
+    -> on Orders.Comp_id = Companies.Comp_id;
++------+------+---------+----------+
+| Name | Cost | Domain  | Quantity |
++------+------+---------+----------+
+| ONGC | 2000 | Oil     |      109 |
+| HPCL | 2500 | Gas     |      121 |
+| IOCL | 1000 | Telecom |      115 |
++------+------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select Name,Cost,Domain,Quantity
+    -> from Companies
+    -> left join Orders
+    -> on Orders.Comp_id = Companies.Comp_id;
++------+------+---------+----------+
+| Name | Cost | Domain  | Quantity |
++------+------+---------+----------+
+| ONGC | 2000 | Oil     |      109 |
+| HPCL | 2500 | Gas     |      121 |
+| IOCL | 1000 | Telecom |      115 |
+| BHEL | 3000 | NULL    |     NULL |
++------+------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select Name,Cost,Domain,Quantity
+    -> from Companies
+    -> right join Orders
+    -> on Orders.Comp_id = Companies.Comp_id;
++------+------+---------+----------+
+| Name | Cost | Domain  | Quantity |
++------+------+---------+----------+
+| ONGC | 2000 | Oil     |      109 |
+| HPCL | 2500 | Gas     |      121 |
+| IOCL | 1000 | Telecom |      115 |
++------+------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select Name,Cost from Companies
+    -> join Orders on Orders.Comp_id = Companies.Comp_id
+    -> union
+    -> select Domain,Quantity from Orders
+    -> join Companies on Orders.Comp_id = Companies.Comp_id;
++---------+------+
+| Name    | Cost |
++---------+------+
+| ONGC    | 2000 |
+| HPCL    | 2500 |
+| IOCL    | 1000 |
+| Oil     |  109 |
+| Gas     |  121 |
+| Telecom |  115 |
++---------+------+
+6 rows in set (0.00 sec)
+
+mysql> create view view_1 as
+    -> select Name,Quantity
+    -> from Companies,Orders
+    -> where Companies.Comp_id = Orders.Comp_id;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from view_1;
++------+----------+
+| Name | Quantity |
++------+----------+
+| ONGC |      109 |
+| HPCL |      121 |
+| IOCL |      115 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,367 @@
+--------------PRACTCLE 2----------------------
+
+ ---create table trial(roll int primary key,no int NOT NULL CHECK (no > 0));
+ ---create table trial1(roll int primary key,no int CHECK (no > 0));
+ ------------insert into trial values(12,10);
+ ---create table t2(r int,name varchar(20) NOT NULL,foreign key(r) references trial(roll));
+ ------------insert into t2 values(12,'jh');
+
+1)  select distinct Bname from loan;
+2)  select loan_no from loan where bname='AKURDI' AND amount>12000;
+3)  select b.cname,l.loan_no,l.amount from loan l join borrowor b on l.loan_no=b.loan_no;
+4)  select b.cname from borrowor b join loan l on l.loan_no=b.loan_no where l.Bname='akurdi' order by cname asc;
+5)  select b.cname from borrowor b union select d.cname from depositor d;
+6)  ---select d.cname from depositor d join borrowor b on b.cname=d.cname;
+    ---select d.cname from depositor d, borrowor b where b.cname=d.cname;
+7)  select d.cname from depositor d left join borrowor b on b.cname=d.cname where b.cname is null;
+8)  select bname,avg(balance) from account group by bname;
+9) ----select a.bname,count(d.cname) from account a join depositor d on a.account_no=d.account_no group by a.bname;
+   ----select a.bname,count(a.account_no) from account a group by a.bname;
+10) select cname,ccity from customer where cname like "p%";
+11) select distinct bcity from branch;
+12) select bname from account group by bname having avg(balance)>12000;
+13) select count(cname) from customer;
+14) select sum(amount) from loan;
+15) delete from loan where amount between 1300 and 1500;
+16) delete from branch where bcity='nigdi';
+
+
+--------------PRACTICAL 3-------------------
+
+
+1) create or replace view view1 as select b.cname from borrowor b join loan l on l.loan_no=b.loan_no where l.bname='akurdi' order by b.cname asc;
+2) --- create or replace view view2 as select bname,bcity from branch;
+   --- insert into view2 values('abc','xyz');
+   --- update view2 set bname='pqr' where bcity='xyz';
+   --- delete from view2 where bname='pqr';
+3) --- create or replace view view3 as select b.cname,d.account_no from borrowor b join depositor d on b.cname=d.cname;
+   --- // same as above insert, update and delete oprations//
+4) select b.cname from borrowor b left join loan l on l.loan_no=b.loan_no union  select d.cname from account a right join depositor d on a.account_no=d.account_no;
+5) select * from view1;
+6) ---create INDEX index_name on table2(s_name);//simple
+   ---create UNIQUE INDEX index_name1 on table2(s_name);
+7) show index from table2;
+8)  truncate table2;
+
+
+
+-------------PRACTICLE 5--------------------
+
+create table myArea(radius number,area  number(5,2));
+
+declare 
+    pie constant number(3,2):=3.14;
+    a number(5,2);
+    r number;
+begin 
+    r:=5;
+    while r<=9
+    loop
+        a:=pie*power(r,2);
+        insert into myArea values(r,a);
+        r:=r+1;
+    end loop;
+end;
+/
+select * from myArea;
+
+
+----------------FOR LOOP-------------------------------
+
+create table my(radius number,area  number(5,2));
+
+DECLARE 
+	pie constant number(3,2):=3.14; 
+	a number(5,2); 
+BEGIN 
+    FOR counter IN 5..9 
+	LOOP 
+	a:=pie*power(counter,2); 
+	insert into my values(a,counter);  
+	END LOOP; 
+END; 
+/
+select * from my;
+
+
+
+---------------------PRACTICLE 8-------------------
+
+-- Create table Library(roll_no number , Name varchar(20), issue_date date, book_name varchar(20), status varchar(2)) 
+-- Create table library_audit(roll_no number , Name varchar(20), issue_date date, book_name varchar(20), status varchar(2))
+
+-- insert into library values(1,'ridha',to_date('12-12-2023','dd-mm-yyyy'),'physics','I')
+-- insert into library values(2,'radha',to_date('11-12-2023','dd-mm-yyyy'),'physics','I')
+-- insert into library values(3,'katha',to_date('10-12-2023','dd-mm-yyyy'),'physics','I')
+
+-- select * from Library;
+
+create or replace trigger library_audit 
+-- BEFORE UPDATE ON Library 
+-- AFTER DELETE ON Library 
+-- AFTER INSERT ON Library 
+References old as o new as n 
+for each row  
+begin 
+	-- insert into library_audit values(:o.roll_no,:o.name,:o.issue_date,:o.book_name,:o.status); 
+	insert into library_audit values(:n.roll_no,:n.name,:n.issue_date,:n.book_name,:n.status); 
+end; 
+/
+    
+-- update Library set Name='op' where roll_no=3;
+-- delete from library where roll_no=1;
+-- insert into Library values(4,'ridha',to_date('12-12-2023','dd-mm-yyyy'),'physics','I');
+
+select * from library_audit;
+
+-- drop table library_audit ;
+-- drop table Library ;
+
+
+------------------PRACTICLE 4-------------------
+
+
+-- create table borrower(Rollno number(4),Name varchar(20),DateofIssue date,NameofBook varchar(30),Status varchar(10));
+-- create table Fine(Rollno number(4),IssueDate date,Amount number(10));
+
+-- insert into borrower values(14,'Ram',to_date('2023-09-23','yyyy-mm-dd'),'Operating System','I');
+-- insert into borrower values(27,'Soham',to_date('2023-05-23','yyyy-mm-dd'),'Object Oriented Programming','I');
+-- insert into borrower values(34,'Mohan',to_date('2023-04-30','yyyy-mm-dd'),'Microprocessor','I');
+-- insert into borrower values(48,'Om',to_date('2023-03-23','yyyy-mm-dd'),'Mechanics','I');
+
+-- select * from borrower;
+
+DECLARE
+    p_nameofbook varchar(30);
+    p_rollno number(4);
+    p_dateofissue date;
+    currentdate date;
+    noofdays number(3);
+    amount number;
+    nodata EXCEPTION;
+BEGIN
+    p_rollno:=&rollno;
+    p_nameofbook:='&nameofbook';
+    currentdate:=trunc(SYSDATE);
+    if p_rollno<=0 then
+    	raise nodata;
+    end if;
+    select DateofIssue into p_dateofissue from borrower where Rollno=p_rollno and NameofBook=p_nameofbook;
+    select currentdate-p_dateofissue into noofdays from dual;
+    dbms_output.put_line('No of days:'||noofdays);
+    if(noofdays>30) then
+   	amount:=noofdays*50;
+    elsif(noofdays>=15 and noofdays<=30) then
+   	amount:=noofdays*5;
+    end if;
+    if (amount>0) then
+   	insert into Fine values(p_rollno,sysdate,amount);
+    end if;
+    update borrower set status='R' where rollno=p_rollno;
+EXCEPTION
+   when nodata then
+   	dbms_output.put_line('!!Roll no not found!!');
+END;
+   /
+select * from fine;
+	
+
+----------------AGGREGATION & INDEXING---------------------
+
+A) 1----db.Employee.aggregate([{$group:{"_id":"$Destination","Salary":{$sum:"$Salary"}}},
+			       {$match:{"Salary":{$gt:20000}}}]);
+
+   2----db.Employee.aggregate([{$match:{"Destination":"Tester"}},
+				{$group:{"_id":"$Add.PAdd","Salary":{$sum:"$Salary"}}}]);
+
+   3----db.Employee.aggregate([{$match:{"Destination":"Tester"}},
+				{$group:{"_id":"$CName","Salary":{$sum:"$Salary"}}}]);
+
+   4---- db.Employee.aggregate([{$project:{"Name.FName":{$toUpper:"$Name.FName"},"_id":1}},
+				{$sort:{"Name.FName":1}}])
+   5---- db.Employee.aggregate([{$group:{"_id":null,"count":{$sum:1}}}]);
+
+   6----db.Employee.aggregate([{$group:{"_id":"$Destination","Salary":{$avg:"$Salary"}}},
+				{$sort:{"Salary":1}}]);
+
+   7----db.Employee.aggregate([{$match:{"Name.FName":"radha"}},
+				{$unwind:"$Expertise"}])
+
+   8---- db.Employee.aggregate([{$unwind:"$Expertise"},
+				{$group:{"_id":"$Expertise","total":{$sum:1}}}])
+
+   9---db.Employee.aggregate([{$match:{"Add.PAdd":"krushna"}},
+		              {$group:{"_id":"$Add.PAdd","designations":{$push:"$Destination"}}}])
+
+   10---db.Employee.aggregate([{$group:{"_id":"$CName","MaxSalary":{$max:"$Salary"},"MinSalary":{$min:"$Salary"}}}])
+
+
+B) 1----db.Employee.createIndex({"Name":1})
+    ----db.Employee.ensureIndex({"Destination":1})
+   2----db.Employee.ensureIndex({"Name":1,"Age":1},{name:"Combined"});
+   3---- db.Employee.ensureIndex({"Expertise":1})
+   4----db.Employee.getIndexes();
+   5----
+   6---- db.Employee.dropIndex("Combined")
+    -----db.Employee.dropIndex({"Name":1})
+   7-----db.Employee.getIndexes();
+
+
+--------------------MAP REDUCE----------------------------
+
+
+1)----db.Employee.mapReduce(function(){emit(this.CName,this.Salary)},
+			   function(key,values){return Array.sum(values)},
+			   {out:"Total"})
+  ----db.Total.find();
+2)----db.Employee.mapReduce(function(){if(this.CName=="TCS")				  	                                {emit(this.CName,this.Salary)}},
+                            function(key,values){return Array.sum(values)},
+			    {out:"TotalSalary"})
+  ----db.Total.find();
+3)----db.Employee.mapReduce(function(){if(this.Destination=="Tester")								{emit(this.Destination,this.Salary)}},
+			    function(key,values){return Array.avg(values)},
+			    {out:"AvgSalary"});
+4)----
+5)----  db.Employee.mapReduce(function () {this.Add.forEach(function(address)
+						{if (address.PAdd == "nagar") 		     						    {emit("totalCount", 1)}})},
+ 			    function (key, values) {return Array.sum(values);}, 
+			    { out: "TotalCount" })
+6)---- db.Employee.mapReduce(function(){if(this.Age>30){this.Add.forEach(function(address)					    {if(address.PAdd=="nagar")								       {emit("TotalCount",1)}})}},
+			     function(key,values){return Array.sum(values)},
+			     {out:"count"})
+
+
+
+--------------------------CURSOR--------------------------------
+
+
+ create table oldt(id number,name varchar(20));
+ create table newt(id number,name varchar(20));
+
+insert into oldt values(1,'prajakta');
+insert into oldt values(2,'cristal');
+
+insert into newt values(3,'tranz');
+insert into newt values(4,'sharvari');
+
+ set serveroutput on;
+
+DECLARE
+	rollno number;
+	flag number(2);
+	cursor c_roll is select * from oldt o where o.id not in(select n.id from newt n);
+	info newt%rowtype;
+BEGIN
+	rollno:=&roll;
+	flag:=0;
+	open c_roll;
+	loop
+	fetch c_roll into info;
+	exit when c_roll%notfound;
+	if(info.id=rollno) then
+		insert into newt values(info.id,info.name);
+		flag:=1;
+	end if;
+	end loop;
+	if(c_roll%rowcount=0 or flag=0) then
+		dbms_output.put_line('Record exist');
+	else
+		dbms_output.put_line('update');
+	end if;
+	close c_roll;
+END;
+/		
+	
+
+----------------------PROCEDURE--------------------------
+
+ create table stu_marks(roll number,name varchar(20),total_marks number);
+create table result(roll number,name varchar(20),class varchar(20));
+
+insert into stu_marks values(1,'ganesh',1200);
+insert into stu_marks values(2,'ram',950);
+insert into stu_marks values(3,'sai',850);
+insert into stu_marks values(4,'laxman',800);
+
+select * from stu_marks;
+
+Create or replace procedure proc_grade(var_roll in number,p_rollno out stu_marks.roll%type,p_name out stu_marks.name%type,p_total out stu_marks.total_marks%type)
+as
+BEGIN
+	select roll,name,total_marks into p_rollno,p_name,p_total from stu_marks where roll=var_roll;
+	if(p_total<=1500 and p_total>=990) then
+		insert into result values(p_rollno,p_name,'distinction');
+	else if(p_total<=989 and p_total>=90) then
+		insert into result values(p_rollno,p_name,'first class');
+	else if(p_total<=899 and p_total>=825) then
+		insert into result values(p_rollno,p_name,'HSC');
+	else
+		insert into result values(p_rollno,p_name,'fail');
+	end if;
+	end if;
+	end if;
+END;
+/
+
+DECLARE
+	var_rollno number;
+	p_roll stu_marks.roll%type;
+	p_name stu_marks.name%type;
+	p_total stu_marks.total_marks%type;
+BEGIN
+	var_rollno:=&rollnumber;
+	proc_grade(var_rollno,p_roll,p_name,p_total);
+END;
+/
+
+---------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION Age_calc(
+      p_d_o_b IN DATE,
+      p_years OUT NUMBER,
+      p_month OUT NUMBER,
+      p_days OUT NUMBER)
+    RETURN NUMBER
+    IS
+      v_today DATE := SYSDATE;
+   BEGIN
+     p_years := EXTRACT(YEAR FROM v_today) - EXTRACT(YEAR FROM p_d_o_b);
+     p_month := EXTRACT(MONTH FROM v_today) - EXTRACT(MONTH FROM p_d_o_b);
+     p_days := EXTRACT(DAY FROM v_today) - EXTRACT(DAY FROM p_d_o_b);
+     -- You can remove the return statement if you don't need to return a value.
+     RETURN p_years;
+   END Age_calc;
+   /
+
+
+
+DECLARE
+      v_years NUMBER;
+      v_month NUMBER;
+      v_days NUMBER;
+    BEGIN
+      -- Call the function without concatenation.
+      dbms_output.put_line('Age ' || Age_calc(date '2003-12-22', v_years, v_month, v_days) || ' years');
+      dbms_output.put_line('Months ' || v_month);
+      dbms_output.put_line('Days ' || v_days);
+   END;
+   /
+
+
+
+
+---------------------------------
+
+create or replace trigger b
+    after insert or update on a
+    for each row
+    begin
+    if(:new.salary<20) then
+    insert into b values(:new.salary);
+end if;
+    end;
+    /
+
+
+
+

@@ -1,0 +1,340 @@
+Assignment Title:
+a. Design and Develop SQL DDL statements which demonstrate the use of SQL objects such as Table, View, Index, Sequence, Synonym, different constraints etc.
+b. Write at least 10 SQL queries on the suitable database application using SQL DML statements.
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+|                    |
+| bank               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use bank;
+Database changed
+mysql> show tables;
++-----------------------+
+| Tables_in_bank        |
++-----------------------+
+| account               |
+| borrower              |
+| branch                |
+| customer              |
+| depositor             |
+| loan                  |
++-----------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Account;
++--------+-------------+---------+
+| Acc_no | Branch_name | Balance |
++--------+-------------+---------+
+|      1 | ABC         |   13900 |
+|      2 | ASD         | 1322900 |
+|      3 | JKL         |  765000 |
+|      4 | LMN         |  876000 |
+|      5 | MNB         | 9976000 |
+|      6 | QWE         |  450000 |
+|      7 | MNB         | 9976000 |
+|      8 | TRE         |   96000 |
+|      9 | XYZ         | 7892300 |
+|     10 | ZXC         |  450000 |
++--------+-------------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Borrower;
++-----------+---------+
+| Cust_name | Loan_no |
++-----------+---------+
+| Aditya    |      11 |
+| Ajinkya   |      12 |
+| Shantanu  |      13 |
+| Suraj     |      14 |
+| Brian     |      15 |
+| Sarthak   |      16 |
+| Prenit    |      17 |
+| Virat     |      18 |
+| Chris     |      19 |
+| Yuvraj    |      20 |
++-----------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Branch;
++-------------+-------------+---------+
+| Branch_name | Branch_city | Assets  |
++-------------+-------------+---------+
+| ABC         | Pune        |  175000 |
+| ASD         | Chennai     |  475100 |
+| JKL         | Banglore    |  250000 |
+| LMN         | Akurdi      |  854000 |
+| MNB         | TamilNadu   |  650008 |
+| QWE         | Kothrud     |  135000 |
+| TRE         | Deccan      |  875000 |
+| TYU         | Kerala      | 8765000 |
+| XYZ         | Kolkata     | 7577000 |
+| ZXC         | Punjab      | 2980000 |
++-------------+-------------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Customer;
++-----------+-------------+-----------+
+| Cust_name | Cust_street | Cust_city |
++-----------+-------------+-----------+
+| Aditya    | QWER        | Pune      |
+| Ajinkya   | ACSD        | Akurdi    |
+| Brian     | HFDE        | Punjab    |
+| Chris     | DFGH        | Kolkata   |
+| Prenit    | TGBH        | Kerala    |
+| Sarthak   | MNTR        | Punjab    |
+| Shantanu  | QAWE        | Banglore  |
+| Suraj     | ACSD        | Deccan    |
+| Virat     | IOLP        | TamilNadu |
+| Yuvraj    | MKLJ        | Chennai   |
++-----------+-------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Depositor;
++-----------+--------+
+| Cust_name | Acc_no |
++-----------+--------+
+| Aditya    |      1 |
+| Ajinkya   |      2 |
+| Shantanu  |      3 |
+| Suraj     |      4 |
+| Brian     |      5 |
+| Sarthak   |      6 |
+| Prenit    |      7 |
+| Virat     |      8 |
+| Chris     |      9 |
+| Yuvraj    |     10 |
++-----------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select * from Loan;
++---------+-------------+---------+
+| Loan_no | Branch_name | Amount  |
++---------+-------------+---------+
+|      11 | ABC         | 1220000 |
+|      12 | ASD         |  157000 |
+|      13 | JKL         | 9500000 |
+|      14 | LMN         |  650000 |
+|      15 | MNB         |  860000 |
+|      16 | QWE         |    4500 |
+|      17 | TRE         | 4505550 |
+|      18 | XYZ         | 4505550 |
+|      19 | ZXC         |  455600 |
+|      20 | ASD         |  455600 |
++---------+-------------+---------+
+10 rows in set (0.00 sec)
+
+Q1. Find the names of all branches in loan relation
+
+mysql> select distinct Branch_name from Loan;
++-------------+
+| Branch_name |
++-------------+
+| ABC         |
+| ASD         |
+| JKL         |
+| LMN         |
+| MNB         |
+| QWE         |
+| TRE         |
+| XYZ         |
+| ZXC         |
++-------------+
+9 rows in set (0.00 sec)
+
+Q2. Find all loan numbers for loans made at Akurdi Branch with loan amount > 12000.
+
+mysql> select Loan_no from Loan where Branch_name = "Akurdi" and Amount > 12000;
+Empty set (0.00 sec)
+
+Q3. Find all customers who have a loan from bank. Find their names,loan_no and loan amount.
+
+mysql> select Customer.Cust_name,Borrower.Loan_no,Loan.amount from Borrower join Customer on Borrower.Cust_name=Customer.Cust_name join Loan on Borrower.Loan_no=Loan.Loan_no;
++-----------+---------+---------+
+| Cust_name | Loan_no | amount  |
++-----------+---------+---------+
+| Aditya    |      11 | 1220000 |
+| Ajinkya   |      12 |  157000 |
+| Shantanu  |      13 | 9500000 |
+| Suraj     |      14 |  650000 |
+| Brian     |      15 |  860000 |
+| Sarthak   |      16 |    4500 |
+| Prenit    |      17 | 4505550 |
+| Virat     |      18 | 4505550 |
+| Chris     |      19 |  455600 |
+| Yuvraj    |      20 |  455600 |
++-----------+---------+---------+
+10 rows in set (0.00 sec)
+
+Q4. List all customers in alphabetical order who have loan from Akurdi branch.
+
+mysql> select Customer.Cust_name,Borrower.Loan_no,Loan.amount from Borrower join Customer on Borrower.Cust_name=Customer.Cust_name join Loan on Borrower.Loan_no=Loan.Loan_no where Loan.Branch_name = "Akurdi" order by Customer.Cust_name;
+Empty set (0.00 sec)
+
+Q5. Find all customers who have an account or loan or both at bank.
+mysql> select distinct Cust_name from (select Cust_name from Depositor union select Cust_name from Borrower) as AllCustomers;
++-----------+
+| Cust_name |
++-----------+
+| Aditya    |
+| Ajinkya   |
+| Brian     |
+| Chris     |
+| Prenit    |
+| Sarthak   |
+| Shantanu  |
+| Suraj     |
+| Virat     |
+| Yuvraj    |
++-----------+
+10 rows in set (0.00 sec)
+
+Q6. Find all customers who have both account and loan at bank.
+
+mysql> select Depositor.Cust_name from Depositor join Borrower on Depositor.Cust_name = Borrower.Cust_name;
++-----------+
+| Cust_name |
++-----------+
+| Aditya    |
+| Ajinkya   |
+| Brian     |
+| Chris     |
+| Prenit    |
+| Sarthak   |
+| Shantanu  |
+| Suraj     |
+| Virat     |
+| Yuvraj    |
++-----------+
+10 rows in set (0.00 sec)
+
+Q7. Find all customers who have account but no loan at the bank.
+
+mysql> select Cust_name from Depositor where Cust_name not in (select Cust_name from Borrower;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select Cust_name from Depositor where Cust_name not in (select Cust_name from Borrower);
+Empty set (0.00 sec)
+
+Q8. Find the average account balance at each branch
+
+mysql> select Branch_name, avg(balance) as avg_balance from Account group by Branch_name;
++-------------+--------------+
+| Branch_name | avg_balance  |
++-------------+--------------+
+| ABC         |   13900.0000 |
+| ASD         | 1322900.0000 |
+| JKL         |  765000.0000 |
+| LMN         |  876000.0000 |
+| MNB         | 9976000.0000 |
+| QWE         |  450000.0000 |
+| TRE         |   96000.0000 |
+| XYZ         | 7892300.0000 |
+| ZXC         |  450000.0000 |
++-------------+--------------+
+9 rows in set (0.00 sec)
+
+Q9. Find no. of depositors at each branch.
+
+mysql> select Account.Branch_name,count(Depositor.Cust_name) as no_of_depositor from Account left join Depositor on Account.Acc_no=Depositor.Acc_no group by Account.Branch_name;
++-------------+-----------------+
+| Branch_name | no_of_depositor |
++-------------+-----------------+
+| ABC         |               1 |
+| ASD         |               1 |
+| JKL         |               1 |
+| LMN         |               1 |
+| MNB         |               2 |
+| QWE         |               1 |
+| TRE         |               1 |
+| XYZ         |               1 |
+| ZXC         |               1 |
++-------------+-----------------+
+9 rows in set (0.00 sec)
+
+Q10. Find name of Customer and city where customer name starts with Letter P.
+
+mysql> select Cust_name,Cust_city from Customer where Cust_name like "P%";
++-----------+-----------+
+| Cust_name | Cust_city |
++-----------+-----------+
+| Prenit    | Kerala    |
++-----------+-----------+
+1 row in set (0.00 sec)
+
+Q11.Display distinct cities of branch.
+
+mysql> select distinct Branch_city from Branch;
++-------------+
+| Branch_city |
++-------------+
+| Pune        |
+| Chennai     |
+| Banglore    |
+| Akurdi      |
+| TamilNadu   |
+| Kothrud     |
+| Deccan      |
+| Kerala      |
+| Kolkata     |
+| Punjab      |
++-------------+
+10 rows in set (0.00 sec)
+
+Q12. Find the branches where average account balance > 12000
+
+mysql> select Branch_name from Account group by Branch_name having Avg(balance)>12000;
++-------------+
+| Branch_name |
++-------------+
+| ABC         |
+| ASD         |
+| JKL         |
+| LMN         |
+| MNB         |
+| QWE         |
+| TRE         |
+| XYZ         |
+| ZXC         |
++-------------+
+9 rows in set (0.00 sec)
+
+Q13. Find number of tuples in customer relation.
+
+mysql> select count(*) from Customer;
++----------+
+| count(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+Q14. Calculate total loan amount given by bank.
+
+mysql> select sum(Amount) from Loan;
++-------------+
+| sum(Amount) |
++-------------+
+|    22313800 |
++-------------+
+1 row in set (0.00 sec)
+
+Q15. Delete all loans with loan amount between 1300 and 1500.
+
+mysql> delete from Loan where amount between 1300 and 1500;
+Query OK, 0 rows affected (0.00 sec)
+
+Q16. Delete all tuples at every branch located in Nigdi.
+
+mysql> delete from Branch where Branch_city = "Nigdi";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>

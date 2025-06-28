@@ -1,0 +1,293 @@
+(base) admin1@admin1-Lenovo-S510:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Server has startup warnings: 
+2023-10-25T08:12:40.921+0530 I STORAGE  [initandlisten] 
+2023-10-25T08:12:40.921+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2023-10-25T08:12:40.921+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-10-25T08:12:45.542+0530 I CONTROL  [initandlisten] 
+2023-10-25T08:12:45.542+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2023-10-25T08:12:45.542+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2023-10-25T08:12:45.542+0530 I CONTROL  [initandlisten] 
+> show dbs
+BD_Company     0.000GB
+admin          0.000GB
+company12      0.000GB
+config         0.000GB
+db             0.000GB
+db1            0.000GB
+local          0.000GB
+mycollections  0.000GB
+mydatabase     0.000GB
+newMongodbB2   0.000GB
+s68            0.000GB
+students       0.000GB
+test           0.000GB
+> show dbs;
+BD_Company     0.000GB
+admin          0.000GB
+company12      0.000GB
+config         0.000GB
+db             0.000GB
+db1            0.000GB
+local          0.000GB
+mycollections  0.000GB
+mydatabase     0.000GB
+newMongodbB2   0.000GB
+s68            0.000GB
+students       0.000GB
+test           0.000GB
+> Mongoclient
+2023-10-25T08:33:48.174+0530 E QUERY    [thread1] ReferenceError: Mongoclient is not defined :
+@(shell):1:1
+> db.fruit.insertMany([
+... { _id: 1, cust_id: "Ant O. Knee", ord_date: new Date("2020-03-01"), price: 25, items: [ { sku: "oranges", qty: 5, price: 2.5 }, { sku: "apples", qty: 5, price: 2.5 } ], status: "A" },
+... { _id: 2, cust_id: "Ant O. Knee", ord_date: new Date("2020-03-08"), price: 70, items: [ { sku: "oranges", qty: 8, price: 2.5 }, { sku: "chocolates", qty: 5, price: 10 } ], status: "A" },
+...   { _id: 3, cust_id: "Busby Bee", ord_date: new Date("2020-03-08"), price: 50, items: [ { sku: "oranges", qty: 10, price: 2.5 }, { sku: "pears", qty: 10, price: 2.5 } ], status: "A" },
+... { _id: 4, cust_id: "Busby Bee", ord_date: new Date("2020-03-18"), price: 25, items: [ { sku: "oranges", qty: 10, price: 2.5 } ], status: "A" },
+...   { _id: 5, cust_id: "Busby Bee", ord_date: new Date("2020-03-19"), price: 50, items: [ { sku: "chocolates", qty: 5, price: 10 } ], status: "A"},
+... { _id: 6, cust_id: "Cam Elot", ord_date: new Date("2020-03-19"), price: 35, items: [ { sku: "carrots", qty: 10, price: 1.0 }, { sku: "apples", qty: 10, price: 2.5 } ], status: "A" },
+... { _id: 7, cust_id: "Cam Elot", ord_date: new Date("2020-03-20"), price: 25, items: [ { sku: "oranges", qty: 10, price: 2.5 } ], status: "A" },
+... { _id: 8, cust_id: "Don Quis", ord_date: new Date("2020-03-20"), price: 75, items: [ { sku: "chocolates", qty: 5, price: 10 }, { sku: "apples", qty: 10, price: 2.5 } ], status: "A" },
+... { _id: 9, cust_id: "Don Quis", ord_date: new Date("2020-03-20"), price: 55, items: [ { sku: "carrots", qty: 5, price: 1.0 }, { sku: "apples", qty: 10, price: 2.5 }, { sku: "oranges", qty: 10, price: 2.5 } ], status: "A" },
+... { _id: 10, cust_id: "Don Quis", ord_date: new Date("2020-03-23"), price: 25, items: [ { sku: "oranges", qty: 10, price: 2.5 } ], status: "A" }
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10
+	]
+}
+> // Define the map function
+> var mapFunction = function() {
+...   emit(this.cust_id, this.price);
+... };
+> 
+> // Define the reduce function
+> var reduceFunction = function(key, values) {
+...   return Array.sum(values);
+... };
+> 
+> // Run the mapReduce operation
+> db.fruit.mapReduce(
+...   mapFunction,
+...   reduceFunction,
+...   {
+...     out: { inline: 1 }, // Use "inline" to return results in the shell
+...     query: { status: "A" }, // Optional query to filter by status
+...   }
+... );
+{
+	"results" : [
+		{
+			"_id" : "Ant O. Knee",
+			"value" : 95
+		},
+		{
+			"_id" : "Busby Bee",
+			"value" : 125
+		},
+		{
+			"_id" : "Cam Elot",
+			"value" : 60
+		},
+		{
+			"_id" : "Don Quis",
+			"value" : 155
+		}
+	],
+	"timeMillis" : 171,
+	"counts" : {
+		"input" : 10,
+		"emit" : 10,
+		"reduce" : 4,
+		"output" : 4
+	},
+	"ok" : 1
+}
+> // Define the map function
+> var mapFunction = function() {
+...   this.items.forEach(function(item) {
+...     emit(this.cust_id, { totalQuantity: item.qty, orderCount: 1 });
+...   });
+... };
+> 
+> // Define the reduce function
+> var reduceFunction = function(key, values) {
+...   var reduced = { totalQuantity: 0, orderCount: 0 };
+...   values.forEach(function(value) {
+...     reduced.totalQuantity += value.totalQuantity;
+...     reduced.orderCount += value.orderCount;
+...   });
+...   return reduced;
+... };
+> 
+> // Define the finalize function to calculate the average quantity per item
+> var finalizeFunction = function(key, reducedValue) {
+...   reducedValue.avgQuantityPerItem = reducedValue.totalQuantity / reducedValue.orderCount;
+...   return reducedValue;
+... };
+> 
+> // Run the mapReduce operation
+> db.fruit.mapReduce(
+...   mapFunction,
+...   reduceFunction,
+...   {
+...     out: { inline: 1 }, // Use "inline" to return results in the shell
+...     query: { status: "A" }, // Optional query to filter by status
+...     finalize: finalizeFunction // Apply the finalize function
+...   }
+... );
+{
+	"results" : [
+		{
+			"_id" : null,
+			"value" : {
+				"totalQuantity" : 138,
+				"orderCount" : 17,
+				"avgQuantityPerItem" : 8.117647058823529
+			}
+		}
+	],
+	"timeMillis" : 32,
+	"counts" : {
+		"input" : 10,
+		"emit" : 17,
+		"reduce" : 1,
+		"output" : 1
+	},
+	"ok" : 1
+}
+> db.employees.insertMany([
+...   { name: "Employee 1", company: "TCS", salary: 50000 },
+...   { name: "Employee 2", company: "Infosys", salary: 60000 },
+... 
+... ]);
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("65388d8cf3e6a32dd050c5ec"),
+		ObjectId("65388d8cf3e6a32dd050c5ed")
+	]
+}
+> var mapFunction = function () {
+...   emit(this.company, this.salary);
+... };
+> 
+> var reduceFunction = function (key, values) {
+...   return Array.sum(values);
+... };
+> 
+> db.employees.mapReduce(mapFunction, reduceFunction, { out: "total_salary_by_company" });
+{
+	"result" : "total_salary_by_company",
+	"timeMillis" : 389,
+	"counts" : {
+		"input" : 2,
+		"emit" : 2,
+		"reduce" : 0,
+		"output" : 2
+	},
+	"ok" : 1
+}
+> var mapFunction = function () {
+...   if (this.address === "Pune") {
+...     emit(this.company, { totalSalary: this.salary, count: 1 });
+...   }
+... };
+> 
+> var reduceFunction = function (key, values) {
+...   var reduced = { totalSalary: 0, count: 0 };
+...   values.forEach(function (value) {
+...     reduced.totalSalary += value.totalSalary;
+...     reduced.count += value.count;
+...   });
+...   return reduced;
+... };
+> var reduceFunction = function (key, values) {
+...   var reduced = { totalSalary: 0, count: 0 };
+...   values.forEach(function (value) {
+...     reduced.totalSalary += value.totalSalary;
+...     reduced.count += value.count;
+...   });
+...   return reduced;
+... };
+> 
+> var finalizeFunction = function (key, reducedValue) {
+...   reducedValue.avgSalary = reducedValue.totalSalary / reducedValue.count;
+...   return reducedValue;
+... };
+> 
+> db.employees.mapReduce(mapFunction, reduceFunction, {
+...   out: "avg_salary_by_company_in_pune",
+...   finalize: finalizeFunction,
+... });
+{
+	"result" : "avg_salary_by_company_in_pune",
+	"timeMillis" : 377,
+	"counts" : {
+		"input" : 2,
+		"emit" : 0,
+		"reduce" : 0,
+		"output" : 0
+	},
+	"ok" : 1
+}
+> var mapFunction = function () {
+...   if (this.state === "AP") {
+...     emit("State=AP", 1);
+...   }
+... };
+> 
+> var reduceFunction = function (key, values) {
+...   return Array.sum(values);
+... };
+> 
+> db.employees.mapReduce(mapFunction, reduceFunction, { out: "count_state_ap" });
+{
+	"result" : "count_state_ap",
+	"timeMillis" : 364,
+	"counts" : {
+		"input" : 2,
+		"emit" : 0,
+		"reduce" : 0,
+		"output" : 0
+	},
+	"ok" : 1
+}
+> 
+> 
+> var mapFunction = function () {
+...   if (this.state === "AP" && this.age > 40) {
+...     emit("State=AP and Age>40", 1);
+...   }
+... };
+> 
+> var reduceFunction = function (key, values) {
+...   return Array.sum(values);
+... };
+> 
+> db.employees.mapReduce(mapFunction, reduceFunction, { out: "count_state_ap_age_gt_40" });
+{
+	"result" : "count_state_ap_age_gt_40",
+	"timeMillis" : 368,
+	"counts" : {
+		"input" : 2,
+		"emit" : 0,
+		"reduce" : 0,
+		"output" : 0
+	},
+	"ok" : 1
+}
+> 
+

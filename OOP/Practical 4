@@ -1,0 +1,44 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+class file
+{
+    char name[20];
+    int id;
+
+public:
+    void write()
+    {
+        ofstream obj1;
+        obj1.open("suchita.txt");
+        cout << "enter name ";
+        cin >> name;
+        obj1 << name;
+        cout << "enter id ";
+        cin >> id;
+        obj1 << id;
+        obj1.close();
+    }
+    void read()
+    {
+        ifstream obj;
+        obj.open("suchita.txt");
+        obj >> name;
+        obj >> id;
+        cout << "name =" << name << endl;
+        cout << "id =" << id << endl;
+        obj.close();
+    }
+};
+int main()
+{
+    int n;
+    cout << "no of employee ";
+    cin >> n;
+    file s[n];
+    for (int i = 0; i < n; i++)
+    {
+        s[i].write();
+        s[i].read();
+    }
+}

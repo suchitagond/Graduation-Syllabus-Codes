@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+class publication
+{
+    string title;
+    float price;
+
+public:
+    void add()
+    {
+        cout << "enter title : ";
+        cin >> title;
+        cout << "enter price : ";
+        cin >> price;
+    }
+    void display()
+    {
+        cout << "the title is " << title<<endl;
+        cout << "the price is " << price<<endl;
+    }
+};
+class book : public publication
+{
+    int page_count;
+
+public:
+    void add_book()
+    {
+        add();
+        cout << "enter page count ";
+        cin >> page_count;
+        if (page_count<0){
+            cout<<"invlid count "<<endl;
+            page_count=0;
+        }
+    }
+    void dis_book()
+    {
+        display();
+        cout << "page count is " << page_count<<endl;
+    }
+};
+class tape : public publication
+{
+    int time;
+
+public:
+    void add_tape()
+    {
+        add();
+        cout << "enter time count ";
+        cin >> time;
+        if (time<0){
+            cout<<"invlid time "<<endl;
+            time=0;
+        }
+    }
+    void dis_tape()
+    {
+        display();
+        cout << "time count is " << time;
+    }
+};
+int main()
+{
+    cout<<"INFORMATION OF BOOK : "<<endl;
+    book obj;
+    obj.add_book();
+    obj.dis_book();
+    cout<<"INFORMATION OF TAPE : "<<endl;
+    tape obj1;
+    obj1.add_tape();
+    obj1.dis_tape();
+}

@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+class complex
+{
+public:
+    int real, imaginary;
+    complex(int tempreal = 0, int tempimaginary = 0)
+    {
+        real = tempreal;
+        imaginary = tempimaginary;
+    }
+    complex addcomplex(complex c1, complex c2)
+    {
+        complex s;
+        s.real = c1.real + c2.real;
+        s.imaginary = c1.imaginary + c2.imaginary;
+        return s;
+    }
+};
+int main()
+{
+    int x1, y1, x2, y2, x3, y3;
+    cout << "enter complex 1 real value : ";
+    cin >> x1;
+    cout << "enter complex 1 imaginary value : ";
+    cin >> y1;
+
+    complex obj1(x1, y1);
+    cout << "1st complex no. is " << obj1.real << "+i" << obj1.imaginary << endl;
+
+    cout << "enter complex 2 real value : ";
+    cin >> x2;
+    cout << "enter complex 2 imaginary value : ";
+    cin >> y2;
+
+    complex obj2(x2, y2);
+    cout << "2nd complex no. is " << obj2.real << "+i" << obj2.imaginary << endl;
+
+    complex c3, c4;
+    c4 = c3.addcomplex(obj1, obj2);
+    cout << "complex no. after addition is " << c4.real << "+i" << c4.imaginary << endl;
+
+    x3 = (x1 * x2) - (y1 * y2);
+    y3 = (x1 * y2) + (x2 * y1);
+    cout << "after multiplication complex no. is" << x3 << "+i" << y3 << endl;
+}
